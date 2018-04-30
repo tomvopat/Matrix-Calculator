@@ -12,8 +12,10 @@ class CPoint_2D {
 public:
     CPoint_2D(int m_x, int m_y);
 
-    int getM_x() const;
-    int getM_y() const;
+    int getX() const;
+    int getY() const;
+
+    bool operator <= (const CPoint_2D& other) const;
 private:
     int m_x;
     int m_y;

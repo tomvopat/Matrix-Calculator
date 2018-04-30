@@ -14,41 +14,36 @@ class CMatrix {
 public:
     CMatrix(int m_height, int m_width);
 
-    virtual CMatrix operator + (const CMatrix& other) const = 0;
-    virtual CMatrix operator - (const CMatrix& other) const = 0;
-    virtual CMatrix operator * (const CMatrix& other) const = 0;
+    CMatrix* operator + (const CMatrix& other) const;
+    CMatrix* operator - (const CMatrix& other) const;
+    virtual CMatrix* operator * (const CMatrix& other) const = 0;
 
     virtual double getValue(const CPoint_2D& point) const = 0;
-    virtual double& getValue(const CPoint_2D& point) = 0;
+    virtual void setValue(double value, const CPoint_2D& point) = 0;
+
     int getHeight() const;
     int getWidth() const;
+    void getSize(int& height, int& width) const;
 
     /**
      * Vrátí transponovanou matici
      * @return
      */
-    virtual CMatrix getTransposed() const = 0;
+    virtual CMatrix* getTransposed() const = 0;
     /**
      * Sloučí dvě matice
      * @param other matice ke sloučení
      * @param horizontally ? vedle sebe : pod sebou
      * @return sloučená matice
      */
-    virtual CMatrix merge(const CMatrix& other, bool horizontally) const = 0;
+    CMatrix* merge(const CMatrix& other, bool horizontally) const;
     /**
      * Ořízne matici podle zadaných dvou bodů (včetně)
      * @param leftTop levý horní bod
      * @param rightBottom pravý dolní bod
      * @return oříznutá matice
      */
-    virtual CMatrix cut(const CPoint_2D& leftTop, const CPoint_2D& rightBottom) const = 0;
-
-    /**
-     * Vrátí rozměry matice
-     * @param height výška
-     * @param width šířka
-     */
-    virtual void getSize(int& height, int& width) const = 0;
+    virtual CMatrix* cut(const CPoint_2D& leftTop, const CPoint_2D& rightBottom) const = 0;
 
     /**
      * Zjistí zda je zadaná matice regulární
@@ -68,8 +63,19 @@ public:
      */
     virtual int getDeterminant() const = 0;
 protected:
+    /**
+     * Vrátí true, pokud zadaný bod náleží do matice
+     * bod (-1,0) = false
+     * matice(3,7), bod(3,6) = false
+     * ...
+     * @param point
+     * @return
+     */
+    bool isValid(const CPoint_2D& point) const;
+
     int m_height;
     int m_width;
+    int m_nonZeroCount;
 };
 
 
