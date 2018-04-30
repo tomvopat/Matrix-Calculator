@@ -7,6 +7,8 @@
 
 #include "../tools/CPoint_2D.h"
 
+#include <iostream>
+
 /**
  * Hlavní třída pro reprezentaci matice
  */
@@ -17,6 +19,9 @@ public:
     CMatrix* operator + (const CMatrix& other) const;
     CMatrix* operator - (const CMatrix& other) const;
     virtual CMatrix* operator * (const CMatrix& other) const = 0;
+    friend std::ostream& operator << (std::ostream& os, const CMatrix& matrix);
+
+    virtual std::ostream& print(std::ostream& os) const = 0;
 
     virtual double getValue(const CPoint_2D& point) const = 0;
     virtual void setValue(double value, const CPoint_2D& point) = 0;

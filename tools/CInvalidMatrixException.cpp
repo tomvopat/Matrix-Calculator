@@ -9,3 +9,7 @@ CInvalidMatrixException::CInvalidMatrixException(const char *m_message) : m_mess
 const char *CInvalidMatrixException::getM_message() const {
     return m_message;
 }
+
+std::ostream& operator << (std::ostream& os, const CInvalidMatrixException& ex) {
+    return os << ex.getM_message();
+}

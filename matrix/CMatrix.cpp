@@ -49,6 +49,11 @@ CMatrix* CMatrix::operator - (const CMatrix& other) const {
     return newMatrix;
 }
 
+std::ostream& operator << (std::ostream& os, const CMatrix& matrix) {
+    matrix.print(os);
+    return os;
+}
+
 int CMatrix::getHeight() const {
     return m_height;
 }

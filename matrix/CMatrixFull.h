@@ -19,8 +19,10 @@ public:
 
     CMatrix* operator*(const CMatrix &other) const override;
 
-    virtual double getValue(const CPoint_2D& point) const override;
-    virtual void setValue(double value, const CPoint_2D& point);
+    std::ostream& print(std::ostream& os) const override;
+
+    double getValue(const CPoint_2D& point) const override;
+    void setValue(double value, const CPoint_2D& point) override;
 
     CMatrix* getTransposed() const override;
     CMatrix* cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom) const override;
