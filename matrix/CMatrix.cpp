@@ -29,9 +29,7 @@ CMatrix* CMatrix::operator + (const CMatrix& other) const {
     CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
     for(int h = 0 ; h < m_height ; h++) {
         for(int w = 0 ; w < m_width ; w++) {
-            double result = getValue(CPoint_2D(w, h)) + other.getValue(CPoint_2D(w, h));
-            if(result != 0) newMatrix->m_nonZeroCount++;
-            newMatrix->getValue(CPoint_2D(h, w)) = result;
+            newMatrix->setValue(getValue(CPoint_2D(w, h)) + other.getValue(CPoint_2D(w, h)), CPoint_2D(h, w));
         }
     }
     return newMatrix;
@@ -45,9 +43,7 @@ CMatrix* CMatrix::operator - (const CMatrix& other) const {
     CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
     for(int h = 0 ; h < m_height ; h++) {
         for(int w = 0 ; w < m_width ; w++) {
-            double result = getValue(CPoint_2D(w, h)) - other.getValue(CPoint_2D(w, h));
-            if(result != 0) newMatrix->m_nonZeroCount++;
-            newMatrix->getValue(CPoint_2D(h, w)) = result;
+            newMatrix->setValue(getValue(CPoint_2D(w, h)) - other.getValue(CPoint_2D(w, h)), CPoint_2D(h, w));
         }
     }
     return newMatrix;
@@ -87,15 +83,11 @@ CMatrix* CMatrix::merge(const CMatrix& other, bool horizontally) const {
             for(int w = 0 ; w < m_width + other.m_width ; w++) {
                 //První matice
                 if(w < m_width) {
-                    double result = getValue(CPoint_2D(w, h));
-                    if(result != 0) newMatrix->m_nonZeroCount++;
-                    newMatrix->getValue(CPoint_2D(w, h)) = result;
+                    newMatrix->setValue(getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
                 }
                     //Druhá matice
                 else {
-                    double result = other.getValue(CPoint_2D(w - m_width, h));
-                    if(result != 0) newMatrix->m_nonZeroCount++;
-                    newMatrix->getValue(CPoint_2D(w, h)) = result;
+                    newMatrix->setValue(other.getValue(CPoint_2D(w - m_width, h)), CPoint_2D(w, h));
                 }
             }
         }
@@ -109,15 +101,11 @@ CMatrix* CMatrix::merge(const CMatrix& other, bool horizontally) const {
             for(int w = 0 ; w < m_width ; w++) {
                 //První matice
                 if(h < m_height) {
-                    double result = getValue(CPoint_2D(w, h));
-                    if(result != 0) newMatrix->m_nonZeroCount++;
-                    newMatrix->getValue(CPoint_2D(w, h)) = result;
+                    newMatrix->setValue(getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
                 }
                     //Druhá matice
                 else {
-                    double result = getValue(CPoint_2D(w, h - m_height));
-                    if(result != 0) newMatrix->m_nonZeroCount++;
-                    newMatrix->getValue(CPoint_2D(w, h)) = result;
+                    newMatrix->setValue(getValue(CPoint_2D(w, h - m_height)), CPoint_2D(w, h));
                 }
             }
         }
