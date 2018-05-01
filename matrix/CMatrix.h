@@ -15,6 +15,7 @@
 class CMatrix {
 public:
     CMatrix(int m_height, int m_width);
+    virtual ~CMatrix() = default;
 
     CMatrix* operator + (const CMatrix& other) const;
     CMatrix* operator - (const CMatrix& other) const;
@@ -26,8 +27,6 @@ public:
     virtual double getValue(const CPoint_2D& point) const = 0;
     virtual void setValue(double value, const CPoint_2D& point) = 0;
 
-    int getHeight() const;
-    int getWidth() const;
     void getSize(int& height, int& width) const;
 
     /**

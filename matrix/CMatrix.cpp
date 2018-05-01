@@ -29,7 +29,7 @@ CMatrix* CMatrix::operator + (const CMatrix& other) const {
     CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
     for(int h = 0 ; h < m_height ; h++) {
         for(int w = 0 ; w < m_width ; w++) {
-            newMatrix->setValue(getValue(CPoint_2D(w, h)) + other.getValue(CPoint_2D(w, h)), CPoint_2D(h, w));
+            newMatrix->setValue(getValue(CPoint_2D(w, h)) + other.getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
         }
     }
     return newMatrix;
@@ -43,7 +43,7 @@ CMatrix* CMatrix::operator - (const CMatrix& other) const {
     CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
     for(int h = 0 ; h < m_height ; h++) {
         for(int w = 0 ; w < m_width ; w++) {
-            newMatrix->setValue(getValue(CPoint_2D(w, h)) - other.getValue(CPoint_2D(w, h)), CPoint_2D(h, w));
+            newMatrix->setValue(getValue(CPoint_2D(w, h)) - other.getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
         }
     }
     return newMatrix;
@@ -52,14 +52,6 @@ CMatrix* CMatrix::operator - (const CMatrix& other) const {
 std::ostream& operator << (std::ostream& os, const CMatrix& matrix) {
     matrix.print(os);
     return os;
-}
-
-int CMatrix::getHeight() const {
-    return m_height;
-}
-
-int CMatrix::getWidth() const {
-    return m_width;
 }
 
 void CMatrix::getSize(int& height, int& width) const {
@@ -110,7 +102,7 @@ CMatrix* CMatrix::merge(const CMatrix& other, bool horizontally) const {
                 }
                     //Druhá matice
                 else {
-                    newMatrix->setValue(getValue(CPoint_2D(w, h - m_height)), CPoint_2D(w, h));
+                    newMatrix->setValue(other.getValue(CPoint_2D(w, h - m_height)), CPoint_2D(w, h));
                 }
             }
         }
