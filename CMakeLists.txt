@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(pa2_sem)
 
 set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
 
 add_executable(
         pa2_sem matrix/CMatrix.cpp
@@ -22,4 +23,5 @@ add_executable(
         tools/CInvalidMatrixException.h
         tools/Consts.h
         tests/Test.cpp
-        tests/Test1.h tests/Test2.h)
+        tests/Test1.h
+        tests/Test2.h)

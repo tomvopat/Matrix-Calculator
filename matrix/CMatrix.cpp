@@ -59,7 +59,7 @@ std::ostream& operator << (std::ostream& os, const CMatrix& matrix) {
 std::ostream& CMatrix::print(std::ostream& os) const {
     for(int h = 0 ; h < m_height ; h++) {
         for(int w = 0 ; w < m_width ; w++) {
-            os << getValue(CPoint_2D(w, h)) << std::setprecision(3) << std::setw(3) << " ";
+            os << std::setw(5) << getValue(CPoint_2D(w, h)) << std::setprecision(3) << " ";
         }
         os << "\n";
     }
