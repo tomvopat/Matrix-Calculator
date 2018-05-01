@@ -10,8 +10,8 @@ add_executable(
         tools/CPoint_2D.h
         matrix/CMatrixFull.cpp
         matrix/CMatrixFull.h
-        matrix/CMatrixParse.cpp
-        matrix/CMatrixParse.h
+        matrix/CMatrixSparse.cpp
+        matrix/CMatrixSparse.h
         matrix/vector/CVector.cpp
         matrix/vector/CVector.h
         matrix/vector/CVectorFull.cpp
@@ -22,4 +22,4 @@ add_executable(
         tools/CInvalidMatrixException.h
         tools/Consts.h
         tests/Test.cpp
-        tests/Test1.h)
+        tests/Test1.h tests/Test2.h)

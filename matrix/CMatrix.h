@@ -22,12 +22,12 @@ public:
     virtual CMatrix* operator * (const CMatrix& other) const = 0;
     friend std::ostream& operator << (std::ostream& os, const CMatrix& matrix);
 
-    virtual std::ostream& print(std::ostream& os) const = 0;
+    std::ostream& print(std::ostream& os) const;
 
     virtual double getValue(const CPoint_2D& point) const = 0;
     virtual void setValue(double value, const CPoint_2D& point) = 0;
-
     void getSize(int& height, int& width) const;
+    int getNonZeroCount() const;
 
     /**
      * Vrátí transponovanou matici

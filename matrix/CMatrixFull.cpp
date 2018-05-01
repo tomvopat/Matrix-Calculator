@@ -5,23 +5,11 @@
 #include "CMatrixFull.h"
 #include "../tools/CInvalidMatrixException.h"
 
-#include <iomanip>
-
 CMatrixFull::CMatrixFull(int height, int width): CMatrix(height, width) {
     m_data.resize(height);
     for(std::vector<double>& item : m_data) {
         item.resize(width);
     }
-}
-
-std::ostream& CMatrixFull::print(std::ostream& os) const {
-    for(int h = 0 ; h < m_height ; h++) {
-        for(int w = 0 ; w < m_width ; w++) {
-            os << getValue(CPoint_2D(w, h)) << std::setprecision(3) << std::setw(3) << " ";
-        }
-        os << "\n";
-    }
-    return os;
 }
 
 CMatrix* CMatrixFull::operator*(const CMatrix &other) const {

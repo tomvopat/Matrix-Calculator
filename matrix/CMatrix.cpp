@@ -6,6 +6,8 @@
 #include "../tools/CInvalidMatrixException.h"
 #include "CMatrixFull.h"
 
+#include <iomanip>
+
 CMatrix::CMatrix(int height, int width): m_nonZeroCount(0) {
     //Pokud je výška/šířka nulová, pak musí být nulový i druhý parametr.
     if(((height == 0) || (width == 0)) && ((height != 0) || (width != 0))) {
@@ -54,9 +56,23 @@ std::ostream& operator << (std::ostream& os, const CMatrix& matrix) {
     return os;
 }
 
+std::ostream& CMatrix::print(std::ostream& os) const {
+    for(int h = 0 ; h < m_height ; h++) {
+        for(int w = 0 ; w < m_width ; w++) {
+            os << getValue(CPoint_2D(w, h)) << std::setprecision(3) << std::setw(3) << " ";
+        }
+        os << "\n";
+    }
+    return os;
+}
+
 void CMatrix::getSize(int& height, int& width) const {
     height = m_height;
     width = m_width;
+}
+
+int CMatrix::getNonZeroCount() const {
+   return m_nonZeroCount;
 }
 
 bool CMatrix::isValid(const CPoint_2D& point) const {

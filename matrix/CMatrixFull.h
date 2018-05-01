@@ -19,8 +19,6 @@ public:
 
     CMatrix* operator*(const CMatrix &other) const override;
 
-    std::ostream& print(std::ostream& os) const override;
-
     double getValue(const CPoint_2D& point) const override;
     void setValue(double value, const CPoint_2D& point) override;
 
