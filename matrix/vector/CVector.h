@@ -12,11 +12,17 @@
  * Třída pro reprezentaci vektoru
  */
 class CVector : CMatrix {
+public:
     CVector(int m_width);
+
+    virtual CVector* operator + (const CVector& other) const = 0;
+    virtual CVector* operator - (const CVector& other) const = 0;
+    virtual CVector* operator * (int val) const = 0;
 
     bool isRegular() const override;
     int getRank() const override;
     int getDeterminant() const override;
+protected:
 };
 
 

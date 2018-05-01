@@ -34,7 +34,8 @@ public:
      * @return
      */
     virtual CMatrix* getTransposed() const = 0;
-    /**
+
+    virtual /**
      * Sloučí dvě matice
      * @param other matice ke sloučení
      * @param horizontally ? vedle sebe : pod sebou
