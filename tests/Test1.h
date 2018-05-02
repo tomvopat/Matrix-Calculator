@@ -8,6 +8,7 @@
 
 using namespace std;
 
+//Testy pro plnou matici
 void test1() {
 
     CMatrixFull m1(0, 0);

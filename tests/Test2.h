@@ -9,6 +9,7 @@
 
 using namespace std;
 
+//Testy pro řídkou matici
 void test2() {
 
     CMatrixSparse m1(0,0);
