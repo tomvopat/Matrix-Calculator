@@ -51,6 +51,24 @@ CMatrix* CMatrix::operator - (const CMatrix& other) const {
     return newMatrix;
 }
 
+CMatrix* CMatrix::operator * (const CMatrix& other) const {
+    if(m_width != other.m_height) throw CInvalidMatrixException("Tyto matice nelze nasobit.");
+
+    CMatrixFull* newMatrix = new CMatrixFull(m_height, other.m_width);
+
+    for(int h = 0 ; h < m_height ; h++) {
+        for(int w = 0 ; w < other.m_width ; w++) {
+            double sum = 0;
+            for(int n = 0 ; n < m_width ; n++) {
+                sum += getValue(CPoint_2D(n, h)) * other.getValue(CPoint_2D(w, n));
+            }
+            newMatrix->setValue(sum, CPoint_2D(w, h));
+        }
+    }
+
+    return newMatrix;
+}
+
 std::ostream& operator << (std::ostream& os, const CMatrix& matrix) {
     matrix.print(os);
     return os;

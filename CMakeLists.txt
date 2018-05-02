@@ -13,15 +13,10 @@ add_executable(
         matrix/CMatrixFull.h
         matrix/CMatrixSparse.cpp
         matrix/CMatrixSparse.h
-        matrix/vector/CVector.cpp
-        matrix/vector/CVector.h
-        matrix/vector/CVectorFull.cpp
-        matrix/vector/CVectorFull.h
-        matrix/vector/CVectorParse.cpp
-        matrix/vector/CVectorParse.h
         tools/CInvalidMatrixException.cpp
         tools/CInvalidMatrixException.h
         tools/Consts.h
         tests/Test.cpp
         tests/Test1.h
-        tests/Test2.h)
+        tests/Test2.h
+        tests/Test3.h)

@@ -19,9 +19,11 @@ public:
 
     CMatrix* operator + (const CMatrix& other) const;
     CMatrix* operator - (const CMatrix& other) const;
-    virtual CMatrix* operator * (const CMatrix& other) const = 0;
+    CMatrix* operator * (const CMatrix& other) const;
+
     friend std::ostream& operator << (std::ostream& os, const CMatrix& matrix);
 
+    virtual CMatrix* duplicate() const = 0;
     std::ostream& print(std::ostream& os) const;
 
     virtual double getValue(const CPoint_2D& point) const = 0;

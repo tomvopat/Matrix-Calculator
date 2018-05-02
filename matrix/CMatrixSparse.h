@@ -18,7 +18,7 @@ class CMatrixSparse : public CMatrix {
 public:
     CMatrixSparse(int m_height, int m_width);
 
-    CMatrix *operator*(const CMatrix &other) const override;
+    CMatrix* duplicate() const override;
 
     double getValue(const CPoint_2D &point) const override;
     void setValue(double value, const CPoint_2D &point) override;

@@ -9,8 +9,8 @@ CMatrixSparse::CMatrixSparse(int m_height, int m_width) : CMatrix(m_height, m_wi
 
 }
 
-CMatrix *CMatrixSparse::operator*(const CMatrix &other) const {
-    return nullptr;
+CMatrix* CMatrixSparse::duplicate() const {
+    return new CMatrixSparse(*this);
 }
 
 double CMatrixSparse::getValue(const CPoint_2D &point) const {

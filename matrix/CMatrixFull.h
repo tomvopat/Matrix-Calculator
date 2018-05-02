@@ -17,7 +17,7 @@ class CMatrixFull : public CMatrix {
 public:
     CMatrixFull(int height, int width);
 
-    CMatrix* operator*(const CMatrix &other) const override;
+    CMatrix* duplicate() const override;
 
     double getValue(const CPoint_2D& point) const override;
     void setValue(double value, const CPoint_2D& point) override;

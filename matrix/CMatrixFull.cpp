@@ -12,8 +12,8 @@ CMatrixFull::CMatrixFull(int height, int width): CMatrix(height, width) {
     }
 }
 
-CMatrix* CMatrixFull::operator*(const CMatrix &other) const {
-    return new CMatrixFull(0,0);
+CMatrix* CMatrixFull::duplicate() const {
+    return new CMatrixFull(*this);
 }
 
 double CMatrixFull::getValue(const CPoint_2D& point) const {
