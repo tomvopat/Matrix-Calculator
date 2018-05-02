@@ -9,6 +9,7 @@
 
 #include <iostream>
 
+
 /**
  * Hlavní třída pro reprezentaci matice
  */
@@ -17,18 +18,47 @@ public:
     CMatrix(int m_height, int m_width);
     virtual ~CMatrix() = default;
 
-    CMatrix* operator + (const CMatrix& other) const;
-    CMatrix* operator - (const CMatrix& other) const;
-    CMatrix* operator * (const CMatrix& other) const;
+    virtual CMatrix* operator + (const CMatrix& other) const = 0;
+    virtual CMatrix* operator - (const CMatrix& other) const = 0;
+    virtual CMatrix* operator * (const CMatrix& other) const = 0;
+
+    static void addition(const CMatrix& a, const CMatrix& b, CMatrix& result);
+    static void subtraction(const CMatrix& a, const CMatrix& b, CMatrix& result);
+    static void multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result);
 
     friend std::ostream& operator << (std::ostream& os, const CMatrix& matrix);
 
     virtual CMatrix* duplicate() const = 0;
+
     std::ostream& print(std::ostream& os) const;
 
+    /**
+     * Vrátí hodnotu na dané pozici v matici
+     * @param point
+     * @return
+     */
     virtual double getValue(const CPoint_2D& point) const = 0;
+
+    /**
+     * Nastaví hodnotu na dané pozici v matici
+     * @param value
+     * @param point
+     */
     virtual void setValue(double value, const CPoint_2D& point) = 0;
+
+    /**
+     * Vrátí velikost matice
+     * @param height počet řádků
+     * @param width počet sloupců
+     */
     void getSize(int& height, int& width) const;
+    int getHeight() const;
+    int getWidth() const;
+
+    /**
+     * Vrátí počet nenulových prvků
+     * @return
+     */
     int getNonZeroCount() const;
 
     /**

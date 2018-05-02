@@ -13,6 +13,28 @@ CMatrix* CMatrixSparse::duplicate() const {
     return new CMatrixSparse(*this);
 }
 
+CMatrix* CMatrixSparse::operator + (const CMatrix& other) const {
+
+    if((m_width != other.getWidth()) || (m_height != other.getHeight())) throw CInvalidMatrixException("Nelze sčítat matice různých rozměrů.");
+    CMatrixSparse* newMatrix = new CMatrixSparse(m_height, m_width);
+    CMatrix::addition(*this, other, *newMatrix);
+    return newMatrix;
+}
+
+CMatrix* CMatrixSparse::operator - (const CMatrix& other) const {
+    if((m_width != other.getWidth()) || (m_height != other.getHeight())) throw CInvalidMatrixException("Nelze odčítat matice různých rozměrů.");
+    CMatrixSparse* newMatrix = new CMatrixSparse(m_height, m_width);
+    CMatrix::subtraction(*this, other, *newMatrix);
+    return newMatrix;
+}
+
+CMatrix* CMatrixSparse::operator * (const CMatrix& other) const {
+    if(m_width != other.getHeight()) throw CInvalidMatrixException("Tyto matice nelze násobit");
+    CMatrixSparse* newMatrix = new CMatrixSparse(m_height, other.getWidth());
+    CMatrix::multiplication(*this, other, *newMatrix);
+    return newMatrix;
+}
+
 double CMatrixSparse::getValue(const CPoint_2D &point) const {
     if(! isValid(point)) throw CInvalidMatrixException("Bod nenáleží matici.");
     auto iterH = m_data.find(point.getY());

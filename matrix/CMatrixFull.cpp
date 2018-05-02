@@ -16,6 +16,29 @@ CMatrix* CMatrixFull::duplicate() const {
     return new CMatrixFull(*this);
 }
 
+CMatrix* CMatrixFull::operator + (const CMatrix& other) const {
+
+    if((m_width != other.getWidth()) || (m_height != other.getHeight())) throw CInvalidMatrixException("Nelze sčítat matice různých rozměrů.");
+    CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
+    CMatrix::addition(*this, other, *newMatrix);
+    return newMatrix;
+}
+
+CMatrix* CMatrixFull::operator - (const CMatrix& other) const {
+    if((m_width != other.getWidth()) || (m_height != other.getHeight())) throw CInvalidMatrixException("Nelze odčítat matice různých rozměrů.");
+    CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
+    CMatrix::subtraction(*this, other, *newMatrix);
+    return newMatrix;
+}
+
+CMatrix* CMatrixFull::operator * (const CMatrix& other) const {
+    if(m_width != other.getHeight()) throw CInvalidMatrixException("Tyto matice nelze násobit");
+    CMatrixFull* newMatrix = new CMatrixFull(m_height, other.getWidth());
+    CMatrix::multiplication(*this, other, *newMatrix);
+    return newMatrix;
+}
+
+
 double CMatrixFull::getValue(const CPoint_2D& point) const {
     if(! isValid(point)) throw CInvalidMatrixException("Neplatný bod v matici.");
 

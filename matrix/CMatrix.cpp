@@ -23,51 +23,34 @@ CMatrix::CMatrix(int height, int width): m_nonZeroCount(0) {
     m_width = width;
 }
 
-CMatrix* CMatrix::operator + (const CMatrix& other) const {
-    if((m_height != other.m_height) || (m_width != other.m_width)) {
-        throw CInvalidMatrixException("Nelze sčítat matice různých rozměrů.");
-    }
-
-    CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
-    for(int h = 0 ; h < m_height ; h++) {
-        for(int w = 0 ; w < m_width ; w++) {
-            newMatrix->setValue(getValue(CPoint_2D(w, h)) + other.getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
+void CMatrix::addition(const CMatrix& a, const CMatrix& b, CMatrix& result) {
+    for(int h = 0 ; h < a.m_height ; h++) {
+        for(int w = 0 ; w < b.m_width ; w++) {
+            result.setValue(a.getValue(CPoint_2D(w, h)) + b.getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
         }
     }
-    return newMatrix;
 }
 
-CMatrix* CMatrix::operator - (const CMatrix& other) const {
-    if((m_height != other.m_height) || (m_width != other.m_width)) {
-        throw CInvalidMatrixException("Nelze odečítat matice různých rozměrů.");
-    }
-
-    CMatrixFull* newMatrix = new CMatrixFull(m_height, m_width);
-    for(int h = 0 ; h < m_height ; h++) {
-        for(int w = 0 ; w < m_width ; w++) {
-            newMatrix->setValue(getValue(CPoint_2D(w, h)) - other.getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
+void CMatrix::subtraction(const CMatrix& a, const CMatrix& b, CMatrix& result) {
+    for(int h = 0 ; h < a.m_height ; h++) {
+        for(int w = 0 ; w < b.m_width ; w++) {
+            result.setValue(a.getValue(CPoint_2D(w, h)) - b.getValue(CPoint_2D(w, h)), CPoint_2D(w, h));
         }
     }
-    return newMatrix;
 }
 
-CMatrix* CMatrix::operator * (const CMatrix& other) const {
-    if(m_width != other.m_height) throw CInvalidMatrixException("Tyto matice nelze nasobit.");
-
-    CMatrixFull* newMatrix = new CMatrixFull(m_height, other.m_width);
-
-    for(int h = 0 ; h < m_height ; h++) {
-        for(int w = 0 ; w < other.m_width ; w++) {
+void CMatrix::multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result) {
+    for(int h = 0 ; h < a.m_height ; h++) {
+        for(int w = 0 ; w < b.m_width ; w++) {
             double sum = 0;
-            for(int n = 0 ; n < m_width ; n++) {
-                sum += getValue(CPoint_2D(n, h)) * other.getValue(CPoint_2D(w, n));
+            for(int n = 0 ; n < a.m_width ; n++) {
+                sum += a.getValue(CPoint_2D(n, h)) * b.getValue(CPoint_2D(w, n));
             }
-            newMatrix->setValue(sum, CPoint_2D(w, h));
+            result.setValue(sum, CPoint_2D(w, h));
         }
     }
-
-    return newMatrix;
 }
+
 
 std::ostream& operator << (std::ostream& os, const CMatrix& matrix) {
     matrix.print(os);
@@ -88,6 +71,15 @@ void CMatrix::getSize(int& height, int& width) const {
     height = m_height;
     width = m_width;
 }
+
+int CMatrix::getHeight() const {
+    return m_height;
+}
+
+int CMatrix::getWidth() const {
+    return m_width;
+}
+
 
 int CMatrix::getNonZeroCount() const {
    return m_nonZeroCount;
