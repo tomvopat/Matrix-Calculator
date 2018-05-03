@@ -7,7 +7,7 @@
 
 #include <iostream>
 
-class CInvalidMatrixException {
+class CInvalidMatrixException : public std::exception {
 public:
     CInvalidMatrixException(const char *m_message);
     const char *getM_message() const;

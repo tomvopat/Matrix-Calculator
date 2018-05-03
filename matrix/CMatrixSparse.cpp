@@ -127,10 +127,6 @@ CMatrix *CMatrixSparse::cut(const CPoint_2D &leftTop, const CPoint_2D &rightBott
     return newMatrix;
 }
 
-bool CMatrixSparse::isRegular() const {
-    return false;
-}
-
 int CMatrixSparse::getDeterminant() const {
     return 0;
 }

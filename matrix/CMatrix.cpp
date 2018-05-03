@@ -142,7 +142,7 @@ CMatrix* CMatrix::merge(const CMatrix& other, bool horizontally) const {
 int CMatrix::getRank() const {
     if(! isInRowEchelonForm()) {
         CMatrix* mm = gem();
-        int rank = getRank();
+        int rank = mm->getRank();
         delete mm;
         return rank;
     }
@@ -155,8 +155,23 @@ int CMatrix::getRank() const {
     return i;
 }
 
+bool CMatrix::isRegular() const {
+
+    //Matice s nulovou velikostí není regulární
+    if(m_height == 0) return false;
+    int n = m_width;
+    while(n > 0) {
+        if(! Numbers::isNull(getValue(CPoint_2D(m_width - n, 0)))) break;
+        n--;
+    }
+
+    if(getRank() == n) return true;
+
+    return false;
+}
+
 CMatrix* CMatrix::gem() const {
-    CMatrix* newMatrix = this->duplicate();
+    CMatrix* newMatrix = duplicate();
 
     int h = 0; //inicializace řádkového pivota
     int k = 0; //inicializace sloupcového pivota

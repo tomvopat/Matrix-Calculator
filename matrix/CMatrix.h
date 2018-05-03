@@ -96,16 +96,16 @@ public:
     virtual CMatrix* cut(const CPoint_2D& leftTop, const CPoint_2D& rightBottom) const = 0;
 
     /**
-     * Zjistí zda je zadaná matice regulární
-     * @return true == regulární
-     */
-    virtual bool isRegular() const = 0;
-
-    /**
      * Vrátí hodnost matice
      * @return
      */
     int getRank() const;
+
+    /**
+     * Zjistí zda je zadaná matice regulární
+     * @return true == regulární
+     */
+    bool isRegular() const;
 
     /**
      * Vrátí hodnotu determinantu matice

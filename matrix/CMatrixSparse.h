@@ -31,7 +31,6 @@ public:
     CMatrix *getTransposed() const override;
     CMatrix *cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom) const override;
 
-    bool isRegular() const override;
     int getDeterminant() const override;
 
 protected:

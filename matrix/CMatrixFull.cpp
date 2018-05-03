@@ -89,10 +89,6 @@ CMatrix* CMatrixFull::cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom
     return newMatrix;
 }
 
-bool CMatrixFull::isRegular() const {
-    return false;
-}
-
 int CMatrixFull::getDeterminant() const {
     return 0;
 }
