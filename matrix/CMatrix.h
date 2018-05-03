@@ -22,12 +22,12 @@ public:
     virtual CMatrix* operator - (const CMatrix& other) const = 0;
     virtual CMatrix* operator * (const CMatrix& other) const = 0;
 
-    static void addition(const CMatrix& a, const CMatrix& b, CMatrix& result);
-    static void subtraction(const CMatrix& a, const CMatrix& b, CMatrix& result);
-    static void multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result);
-
     friend std::ostream& operator << (std::ostream& os, const CMatrix& matrix);
 
+    /**
+     * vrátí dynamicky alokovanou kopii této matice
+     * @return
+     */
     virtual CMatrix* duplicate() const = 0;
 
     /**
@@ -37,6 +37,11 @@ public:
      */
     virtual void swapRows(int i, int j) = 0;
 
+    /**
+     * Metoda pro výpis do proudu
+     * @param os
+     * @return
+     */
     std::ostream& print(std::ostream& os) const;
 
     /**
@@ -74,13 +79,14 @@ public:
      */
     virtual CMatrix* getTransposed() const = 0;
 
-    virtual /**
+     /**
      * Sloučí dvě matice
      * @param other matice ke sloučení
      * @param horizontally ? vedle sebe : pod sebou
      * @return sloučená matice
      */
     CMatrix* merge(const CMatrix& other, bool horizontally) const;
+
     /**
      * Ořízne matici podle zadaných dvou bodů (včetně)
      * @param leftTop levý horní bod
@@ -94,12 +100,13 @@ public:
      * @return true == regulární
      */
     virtual bool isRegular() const = 0;
+
     /**
      * Vrátí hodnost matice
-     * Vyhodí výjimku CInvalidMatrixException, pokud matice není čtvercová
      * @return
      */
     virtual int getRank() const = 0;
+
     /**
      * Vrátí hodnotu determinantu matice
      * Vyhodí výjimku CInvalidMatrixException, pokud matice není regulární
@@ -128,6 +135,33 @@ protected:
      * @return
      */
     bool isValid(const CPoint_2D& point) const;
+
+    /**
+     * Sečte dvě matice
+     * pokud tyto matice nelze sčítat, vyhodí výjimku CInvalidMatrixException
+     * @param a
+     * @param b
+     * @param result výsledek
+     */
+    static void addition(const CMatrix& a, const CMatrix& b, CMatrix& result);
+
+    /**
+     * Odečte dvě matice
+     * Pokud tyto matice nelze odečítat, vyhodí výjimku CInvalidMatrixException
+     * @param a
+     * @param b
+     * @param result výsledek
+     */
+    static void subtraction(const CMatrix& a, const CMatrix& b, CMatrix& result);
+
+    /**
+     * Vynásobí dvě matice
+     * Pokud tyto matice nejdou násobit, vyhodí výjimku CInvalidMatrixException
+     * @param a levý činitel
+     * @param b pravý činitel
+     * @param result výsledek
+     */
+    static void multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result);
 
     int m_height;
     int m_width;
