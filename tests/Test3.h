@@ -30,6 +30,10 @@ void test3() {
     CMatrix* mm = f1 * f2;
     assert(mm->getValue(CPoint_2D(0,0)) == 11);
     assert(mm->getValue(CPoint_2D(0,1)) == -8);
+
+    mm->swapRows(0, 1);
+    assert(mm->getValue(CPoint_2D(0,0)) == -8);
+    assert(mm->getValue(CPoint_2D(0,1)) == 11);
     delete mm;
 
     CMatrixSparse s1(2, 3);
@@ -49,6 +53,10 @@ void test3() {
     mm = s1 * s2;
     assert(mm->getValue(CPoint_2D(0,0)) == 11);
     assert(mm->getValue(CPoint_2D(0,1)) == -8);
+
+    mm->swapRows(0, 1);
+    assert(mm->getValue(CPoint_2D(0,0)) == -8);
+    assert(mm->getValue(CPoint_2D(0,1)) == 11);
     delete mm;
 }
 
