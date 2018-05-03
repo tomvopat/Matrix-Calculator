@@ -4,6 +4,7 @@
 
 #include "CMatrixFull.h"
 #include "../tools/CInvalidMatrixException.h"
+#include "../tools/Numbers.h"
 
 CMatrixFull::CMatrixFull(int height, int width): CMatrix(height, width) {
     m_data.resize(height);
@@ -57,10 +58,10 @@ void CMatrixFull::setValue(double value, const CPoint_2D& point) {
     if(! isValid(point)) throw CInvalidMatrixException("Neplatný bod v matici.");
 
     //Zvýšení počtu nenulových prvků
-    if((m_data[point.getY()][point.getX()] == 0) && (value != 0)) m_nonZeroCount++;
+    if(Numbers::isNull(m_data[point.getY()][point.getX()]) && !Numbers::isNull(value)) m_nonZeroCount++;
 
     //Snížení počtu nenulových prvků
-    if((m_data[point.getY()][point.getX()] != 0) && (value == 0)) m_nonZeroCount--;
+    if(!Numbers::isNull(m_data[point.getY()][point.getX()]) && Numbers::isNull(value)) m_nonZeroCount--;
 
     m_data[point.getY()][point.getX()] = value;
 }

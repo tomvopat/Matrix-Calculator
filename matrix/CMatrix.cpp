@@ -5,6 +5,7 @@
 #include "CMatrix.h"
 #include "../tools/CInvalidMatrixException.h"
 #include "CMatrixFull.h"
+#include "../tools/Numbers.h"
 
 #include <iomanip>
 #include <climits>
@@ -151,7 +152,7 @@ CMatrix* CMatrix::gem() const {
                 i_max = i;
             }
         }
-        if(newMatrix->getValue(CPoint_2D(k, i_max)) == 0) {
+        if(Numbers::isNull(newMatrix->getValue(CPoint_2D(k, i_max)))) {
             //žádný pivot v tomto sloupci
             k++;
         }
@@ -171,4 +172,18 @@ CMatrix* CMatrix::gem() const {
         }
     }
     return newMatrix;
+}
+
+bool CMatrix::isInRowEchelonForm() const {
+    int h = 0;
+    int w = 0;
+
+    while((h < m_height) && (w < m_width)) {
+        for(int i = h + 1 ; i < m_height ; i++) {
+            if(! Numbers::isNull(getValue(CPoint_2D(w, i)))) return false;
+        }
+        if(! Numbers::isNull(getValue(CPoint_2D(w, h)))) h++;
+        w++;
+    }
+    return true;
 }

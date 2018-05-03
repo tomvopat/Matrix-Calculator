@@ -19,4 +19,4 @@ add_executable(
         tests/Test.cpp
         tests/Test1.h
         tests/Test2.h
-        tests/Test3.h tests/Test4.h)
+        tests/Test3.h tests/Test4.h tools/Numbers.cpp tools/Numbers.h)

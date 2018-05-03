@@ -4,6 +4,7 @@
 
 #include "CMatrixSparse.h"
 #include "../tools/CInvalidMatrixException.h"
+#include "../tools/Numbers.h"
 
 CMatrixSparse::CMatrixSparse(int m_height, int m_width) : CMatrix(m_height, m_width) {
 
@@ -80,7 +81,7 @@ double CMatrixSparse::getValue(const CPoint_2D &point) const {
 
 void CMatrixSparse::setValue(double value, const CPoint_2D &point) {
     if(! isValid(point)) throw CInvalidMatrixException("Bod nenáleží matici.");
-    if(value == 0) {
+    if(Numbers::isNull(value)) {
         //Musíme zkontrolovat, zda tam takový prvek už není a případně ho smazat!
         auto iterH = m_data.find(point.getY());
         if(iterH != m_data.end()) {

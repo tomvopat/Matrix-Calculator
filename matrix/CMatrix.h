@@ -107,7 +107,17 @@ public:
      */
     virtual int getDeterminant() const = 0;
 
+    /**
+     * Vrátí zGEMovanou matici
+     * @return
+     */
     CMatrix* gem() const;
+
+    /**
+     * Vrátí TRUE, pokud je matice v horním stupňovitém tvaru
+     * @return
+     */
+    bool isInRowEchelonForm() const;
 protected:
     /**
      * Vrátí true, pokud zadaný bod náleží do matice

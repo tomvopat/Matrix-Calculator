@@ -36,10 +36,11 @@ void test4() {
     f1.setValue(1, CPoint_2D(2,3));
     f1.setValue(1, CPoint_2D(3,3));
     f1.setValue(0, CPoint_2D(4,3));
-
+    assert(! f1.isInRowEchelonForm());
     cout << f1 << endl;
 
     CMatrix* mm = f1.gem();
+    assert(mm->isInRowEchelonForm());
     cout << *mm << endl;
 }
 
