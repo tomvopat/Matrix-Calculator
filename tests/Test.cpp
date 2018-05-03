@@ -7,12 +7,14 @@
 #include "Test1.h"
 #include "Test2.h"
 #include "Test3.h"
+#include "Test4.h"
 
 int main(int argc, char* argv[]) {
 
-    test1();
-    test2();
-    test3();
+//    test1();
+//    test2();
+//    test3();
+    test4();
 
     return 0;
 }

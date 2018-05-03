@@ -7,6 +7,8 @@
 #include "CMatrixFull.h"
 
 #include <iomanip>
+#include <climits>
+#include <cmath>
 
 CMatrix::CMatrix(int height, int width): m_nonZeroCount(0) {
     //Pokud je výška/šířka nulová, pak musí být nulový i druhý parametr.
@@ -134,4 +136,39 @@ CMatrix* CMatrix::merge(const CMatrix& other, bool horizontally) const {
         }
         return newMatrix;
     }
+}
+
+CMatrix* CMatrix::gem() const {
+    CMatrix* newMatrix = this->duplicate();
+
+    int h = 0; //inicializace řádkového pivota
+    int k = 0; //inicializace sloupcového pivota
+
+    while((h < newMatrix->m_height) && (k < newMatrix->m_width)) {
+        int i_max = h;
+        for(int i = h + 1; i < newMatrix->m_height ; i++) {
+            if(std::abs(newMatrix->getValue(CPoint_2D(k, i))) > std::abs(newMatrix->getValue(CPoint_2D(k, i_max)))) {
+                i_max = i;
+            }
+        }
+        if(newMatrix->getValue(CPoint_2D(k, i_max)) == 0) {
+            //žádný pivot v tomto sloupci
+            k++;
+        }
+        else {
+            newMatrix->swapRows(h, i_max);
+            //Pro všechny řádky pod pivotem
+            for(int i = h + 1 ; i < m_height ; i++) {
+                double f = newMatrix->getValue(CPoint_2D(k, i)) / newMatrix->getValue(CPoint_2D(k, h));
+                newMatrix->setValue(0, CPoint_2D(k, i));
+                //pro všechny zbývající prvky v daném řádku
+                for(int j = k + 1 ; j < newMatrix->m_width ; j++) {
+                    newMatrix->setValue(newMatrix->getValue(CPoint_2D(j, i)) - newMatrix->getValue(CPoint_2D(j, h)) * f, CPoint_2D(j, i));
+                }
+            }
+            h++;
+            k++;
+        }
+    }
+    return newMatrix;
 }

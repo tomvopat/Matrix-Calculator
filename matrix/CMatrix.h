@@ -106,6 +106,8 @@ public:
      * @return
      */
     virtual int getDeterminant() const = 0;
+
+    CMatrix* gem() const;
 protected:
     /**
      * Vrátí true, pokud zadaný bod náleží do matice
