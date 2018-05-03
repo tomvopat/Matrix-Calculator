@@ -30,6 +30,13 @@ public:
 
     virtual CMatrix* duplicate() const = 0;
 
+    /**
+     * Prohodí řádky v matici zadané indexy 'i' a 'j'
+     * @param i index řádku
+     * @param j index řádku
+     */
+    virtual void swapRows(int i, int j) = 0;
+
     std::ostream& print(std::ostream& os) const;
 
     /**

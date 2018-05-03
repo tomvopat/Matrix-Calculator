@@ -38,6 +38,13 @@ CMatrix* CMatrixFull::operator * (const CMatrix& other) const {
     return newMatrix;
 }
 
+void CMatrixFull::swapRows(int i, int j) {
+    if((i >= m_height) || (j >= m_height)) throw CInvalidMatrixException("Neplatný řádkový index.");
+
+    std::vector<double> tmp(m_data[i]);
+    m_data[i] = m_data[j];
+    m_data[j] = tmp;
+}
 
 double CMatrixFull::getValue(const CPoint_2D& point) const {
     if(! isValid(point)) throw CInvalidMatrixException("Neplatný bod v matici.");

@@ -35,6 +35,40 @@ CMatrix* CMatrixSparse::operator * (const CMatrix& other) const {
     return newMatrix;
 }
 
+void CMatrixSparse::swapRows(int i, int j) {
+    if((i >= m_height) || (j >= m_height)) throw CInvalidMatrixException("Neplatné řádkové indexy.");
+
+    auto iterI = m_data.find(i);
+    auto iterJ = m_data.find(j);
+
+    //radek 'i' neni definovany
+    if(iterI == m_data.end()) {
+        //radek 'j' take neni definovany
+        if(iterJ == m_data.end()) {}
+        else {
+            std::map<int, double> tmpJ(iterJ->second);
+            m_data.erase(j);
+            m_data[i] = tmpJ;
+        }
+    }
+    //radek 'j' neni definovany
+    else if(iterJ == m_data.end()) {
+        std::map<int, double> tmpI(iterI->second);
+        m_data.erase(i);
+        m_data[j] = tmpI;
+
+    }
+    //oba radky jsou definovane
+    else {
+        std::map<int, double> tmpI(iterI->second);
+        std::map<int, double> tmpJ(iterJ->second);
+        m_data.erase(i);
+        m_data.erase(j);
+        m_data[j] = tmpI;
+        m_data[i] = tmpJ;
+    }
+}
+
 double CMatrixSparse::getValue(const CPoint_2D &point) const {
     if(! isValid(point)) throw CInvalidMatrixException("Bod nenáleží matici.");
     auto iterH = m_data.find(point.getY());
