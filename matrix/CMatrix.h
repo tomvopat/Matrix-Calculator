@@ -105,7 +105,7 @@ public:
      * Vrátí hodnost matice
      * @return
      */
-    virtual int getRank() const = 0;
+    int getRank() const;
 
     /**
      * Vrátí hodnotu determinantu matice
@@ -135,6 +135,8 @@ protected:
      * @return
      */
     bool isValid(const CPoint_2D& point) const;
+
+    virtual bool isZeroRow(int i) const = 0;
 
     /**
      * Sečte dvě matice

@@ -139,6 +139,22 @@ CMatrix* CMatrix::merge(const CMatrix& other, bool horizontally) const {
     }
 }
 
+int CMatrix::getRank() const {
+    if(! isInRowEchelonForm()) {
+        CMatrix* mm = gem();
+        int rank = getRank();
+        delete mm;
+        return rank;
+    }
+
+    int i = m_height;
+    while(i > 0) {
+        if(! isZeroRow(i - 1)) break;
+        i--;
+    }
+    return i;
+}
+
 CMatrix* CMatrix::gem() const {
     CMatrix* newMatrix = this->duplicate();
 

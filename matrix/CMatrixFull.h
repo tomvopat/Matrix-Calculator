@@ -31,9 +31,10 @@ public:
     CMatrix* cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom) const override;
 
     bool isRegular() const override;
-    int getRank() const override;
     int getDeterminant() const override;
 protected:
+    bool isZeroRow(int i) const override;
+
     std::vector<std::vector<double>> m_data;
 };
 

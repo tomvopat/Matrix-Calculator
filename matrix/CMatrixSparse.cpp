@@ -131,10 +131,18 @@ bool CMatrixSparse::isRegular() const {
     return false;
 }
 
-int CMatrixSparse::getRank() const {
+int CMatrixSparse::getDeterminant() const {
     return 0;
 }
 
-int CMatrixSparse::getDeterminant() const {
-    return 0;
+bool CMatrixSparse::isZeroRow(int i) const {
+    if(i >= m_height) throw CInvalidMatrixException("Neplatný řádek matice.");
+
+    auto iterH = m_data.find(i);
+    if(iterH == m_data.end()) return true;
+
+    for(auto iterW : iterH->second) {
+        if(! Numbers::isNull(iterW.second)) return false;
+    }
+    return true;
 }

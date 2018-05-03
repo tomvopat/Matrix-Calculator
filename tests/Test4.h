@@ -63,6 +63,7 @@ void test4() {
     assert(mm->getValue(CPoint_2D(2,3)) == 0);
     assert(mm->getValue(CPoint_2D(3,3)) == -1);
     assert(mm->getValue(CPoint_2D(4,3)) == -2.5);
+    assert(mm->getRank() == 4);
     delete mm;
 
     CMatrixFull f2(3,5);
@@ -105,6 +106,7 @@ void test4() {
     assert(mmm->getValue(CPoint_2D(2,2)) == 0);
     assert(mmm->getValue(CPoint_2D(3,2)) == 0);
     assert(mmm->getValue(CPoint_2D(4,2)) == 0);
+    assert(mmm->getRank() == 2);
     delete mmm;
 }
 

@@ -93,10 +93,15 @@ bool CMatrixFull::isRegular() const {
     return false;
 }
 
-int CMatrixFull::getRank() const {
+int CMatrixFull::getDeterminant() const {
     return 0;
 }
 
-int CMatrixFull::getDeterminant() const {
-    return 0;
+bool CMatrixFull::isZeroRow(int i) const {
+    if(i >= m_height) throw CInvalidMatrixException("Neplatný řádek matice.");
+
+    for(int j = 0 ; j < m_width ; j++) {
+        if(! Numbers::isNull(getValue(CPoint_2D(j, i)))) return false;
+    }
+    return true;
 }
