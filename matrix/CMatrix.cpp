@@ -156,9 +156,9 @@ int CMatrix::getRank() const {
 }
 
 bool CMatrix::isRegular() const {
-
     //Matice s nulovou velikostí není regulární
     if(m_height == 0) return false;
+
     int n = m_width;
     while(n > 0) {
         if(! Numbers::isNull(getValue(CPoint_2D(m_width - n, 0)))) break;
@@ -168,6 +168,53 @@ bool CMatrix::isRegular() const {
     if(getRank() == n) return true;
 
     return false;
+}
+
+//source: https://www.cs.rochester.edu/~brown/Crypto/assts/projects/adj.html
+double CMatrix::getDeterminant() const {
+    CMatrix* mm = gem();
+    if(! mm->isRegular()) {
+        delete mm;
+        throw CInvalidMatrixException("Nelze počítat determinant neregulární matice.");
+    }
+
+    int n = mm->getRank();
+    int w = 0;
+
+    while(w < mm->getWidth()) {
+        if(! Numbers::isNull(mm->getValue(CPoint_2D(w, 0)))) break;
+        w++;
+    }
+
+    CMatrix* newMatrix = mm->cut(CPoint_2D(w, 0), CPoint_2D(mm->getWidth() - 1, n - 1));
+    delete mm;
+    double det = newMatrix->determinantRecursive();
+    delete newMatrix;
+    return det;
+}
+
+double CMatrix::determinantRecursive() const {
+    if(m_height == 1) return getValue(CPoint_2D(0,0));
+    else if(m_height == 2) {
+        return getValue(CPoint_2D(0,0)) * getValue(CPoint_2D(1,1)) - getValue(CPoint_2D(1,0)) * getValue(CPoint_2D(0,1));
+    }
+    else {
+        double det = 0;
+        for(int j1 = 0 ; j1 < m_height ; j1++) {
+            CMatrix* newMatrix = cut(CPoint_2D(1,1), CPoint_2D(m_height - 1, m_width - 1));
+            for(int i = 1 ; i < m_height ; i++) {
+                int j2 = 0;
+                for(int j = 0 ; j < m_height ; j++) {
+                    if(j == j1) continue;
+                    newMatrix->setValue(getValue(CPoint_2D(i, j)), CPoint_2D(i - 1, j2));
+                    j2++;
+                }
+            }
+            det += pow(-1.0, j1 + 2.0) * getValue(CPoint_2D(0, j1)) * newMatrix->determinantRecursive();
+            delete newMatrix;
+        }
+        return det;
+    }
 }
 
 CMatrix* CMatrix::gem() const {
@@ -203,6 +250,13 @@ CMatrix* CMatrix::gem() const {
         }
     }
     return newMatrix;
+}
+
+CMatrix* CMatrix::invert() const {
+
+    //todo
+
+    return NULL;
 }
 
 bool CMatrix::isInRowEchelonForm() const {

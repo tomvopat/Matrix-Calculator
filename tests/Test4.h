@@ -10,7 +10,7 @@
 
 using namespace std;
 
-//Testování GEMu, horního stupňovitého tvaru, výpočtu hodnosti, vyhodnocení zda je matice regulární
+//Testování GEMu, horního stupňovitého tvaru, výpočtu hodnosti, vyhodnocení zda je matice regulární, výpočet determinantu
 void test4() {
     CMatrixFull f1(4,4);
     f1.setValue(1, CPoint_2D(0,0));
@@ -57,6 +57,7 @@ void test4() {
     assert(mm->getValue(CPoint_2D(3,3)) == -1);
     assert(mm->getRank() == 4);
     assert(mm->isRegular());
+    assert(mm->getDeterminant() == 8);
     delete mm;
 
     CMatrixFull f2(3,4);
@@ -111,6 +112,7 @@ void test4() {
     s1.setValue(0, CPoint_2D(2,2));
     assert(s1.getRank() == 2);
     assert(s1.isRegular());
+    assert(s1.getDeterminant() == 3);
 
 }
 

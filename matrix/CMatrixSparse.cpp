@@ -127,10 +127,6 @@ CMatrix *CMatrixSparse::cut(const CPoint_2D &leftTop, const CPoint_2D &rightBott
     return newMatrix;
 }
 
-int CMatrixSparse::getDeterminant() const {
-    return 0;
-}
-
 bool CMatrixSparse::isZeroRow(int i) const {
     if(i >= m_height) throw CInvalidMatrixException("Neplatný řádek matice.");
 

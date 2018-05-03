@@ -29,8 +29,6 @@ public:
 
     CMatrix* getTransposed() const override;
     CMatrix* cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom) const override;
-
-    int getDeterminant() const override;
 protected:
     bool isZeroRow(int i) const override;
 

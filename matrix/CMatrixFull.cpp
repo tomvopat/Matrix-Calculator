@@ -89,10 +89,6 @@ CMatrix* CMatrixFull::cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom
     return newMatrix;
 }
 
-int CMatrixFull::getDeterminant() const {
-    return 0;
-}
-
 bool CMatrixFull::isZeroRow(int i) const {
     if(i >= m_height) throw CInvalidMatrixException("Neplatný řádek matice.");
 

@@ -112,13 +112,20 @@ public:
      * Vyhodí výjimku CInvalidMatrixException, pokud matice není regulární
      * @return
      */
-    virtual int getDeterminant() const = 0;
+    double getDeterminant() const;
 
     /**
      * Vrátí zGEMovanou matici
      * @return
      */
     CMatrix* gem() const;
+
+    /**
+     * Vrátí inverzní matici
+     * pokud tato matice není regulární, vyhodí výjimku CInvalidMatrixException
+     * @return
+     */
+    CMatrix* invert() const;
 
     /**
      * Vrátí TRUE, pokud je matice v horním stupňovitém tvaru
@@ -136,6 +143,11 @@ protected:
      */
     bool isValid(const CPoint_2D& point) const;
 
+    /**
+     * Zjistí, je řádek vyplněn pouze nulama
+     * @param i index řádku v matici
+     * @return
+     */
     virtual bool isZeroRow(int i) const = 0;
 
     /**
@@ -164,6 +176,8 @@ protected:
      * @param result výsledek
      */
     static void multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result);
+
+    double determinantRecursive() const;
 
     int m_height;
     int m_width;
