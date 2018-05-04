@@ -138,3 +138,7 @@ bool CMatrixSparse::isZeroRow(int i) const {
     }
     return true;
 }
+
+CMatrix* CMatrixSparse::newMatrix(int height, int width) const {
+    return new CMatrixSparse(height, width);
+}

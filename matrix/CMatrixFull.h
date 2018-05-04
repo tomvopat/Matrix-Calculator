@@ -30,6 +30,7 @@ public:
     CMatrix* getTransposed() const override;
     CMatrix* cut(const CPoint_2D &leftTop, const CPoint_2D &rightBottom) const override;
 protected:
+    CMatrix* newMatrix(int height, int width) const override;
     bool isZeroRow(int i) const override;
 
     std::vector<std::vector<double>> m_data;

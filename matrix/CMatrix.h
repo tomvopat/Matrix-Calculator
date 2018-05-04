@@ -64,7 +64,17 @@ public:
      * @param width počet sloupců
      */
     void getSize(int& height, int& width) const;
+
+    /**
+     * Vrátí počet řádků matice
+     * @return
+     */
     int getHeight() const;
+
+    /**
+     * Vrátí počet sloupců matice
+     * @return
+     */
     int getWidth() const;
 
     /**
@@ -109,7 +119,7 @@ public:
 
     /**
      * Vrátí hodnotu determinantu matice
-     * Vyhodí výjimku CInvalidMatrixException, pokud matice není regulární
+     * Vyhodí výjimku CInvalidMatrixException, pokud matice není čtvercová
      * @return
      */
     double getDeterminant() const;
@@ -123,16 +133,44 @@ public:
     /**
      * Vrátí inverzní matici
      * pokud tato matice není regulární, vyhodí výjimku CInvalidMatrixException
+     * Inverzní matice k regulární čtvercové matici A je adjugovaná matice, jejíž každý prvek je vydělen determinantem matice A
+     * (Adjugovaná matice je transponovaná kofaktorová matice matice A)
      * @return
      */
-    CMatrix* invert() const;
+    CMatrix* getInverse() const;
 
     /**
      * Vrátí TRUE, pokud je matice v horním stupňovitém tvaru
      * @return
      */
     bool isInRowEchelonForm() const;
+
+    /**
+     * Vrátí kofaktorovou matici
+     * Kofaktorová matice je matice determinantů Beta(i,j) matic, kde na pozici (i,j) je determinant matice Beta(i,j) vynásobený (-1)^(i+j)
+     * @return
+     */
+    CMatrix* cofactor() const;
+
+    /**
+     * Vrátí matici B(i,j)
+     * matice B(i,j) vznikne z původní matice vynecháním i-tého řádku a j-tého sloupce
+     * @param i řádkový index
+     * @param j sloupcový index
+     * @return
+     */
+    CMatrix* betaMatrix(int i, int j) const;
+
 protected:
+
+    /**
+     * Vrátí ukazatel na nově alokovanou matici stejného typu zadaných rozměrů
+     * @param height počet řádků
+     * @param width počet sloupců
+     * @return
+     */
+    virtual CMatrix* newMatrix(int height, int width) const = 0;
+
     /**
      * Vrátí true, pokud zadaný bod náleží do matice
      * bod (-1,0) = false
@@ -176,8 +214,6 @@ protected:
      * @param result výsledek
      */
     static void multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result);
-
-    double determinantRecursive() const;
 
     int m_height;
     int m_width;

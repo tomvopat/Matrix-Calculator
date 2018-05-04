@@ -172,28 +172,8 @@ bool CMatrix::isRegular() const {
 
 //source: https://www.cs.rochester.edu/~brown/Crypto/assts/projects/adj.html
 double CMatrix::getDeterminant() const {
-    CMatrix* mm = gem();
-    if(! mm->isRegular()) {
-        delete mm;
-        throw CInvalidMatrixException("Nelze počítat determinant neregulární matice.");
-    }
+    if(m_height != m_width) throw CInvalidMatrixException("Determinant lze počítat pouze u čtercových matic.");
 
-    int n = mm->getRank();
-    int w = 0;
-
-    while(w < mm->getWidth()) {
-        if(! Numbers::isNull(mm->getValue(CPoint_2D(w, 0)))) break;
-        w++;
-    }
-
-    CMatrix* newMatrix = mm->cut(CPoint_2D(w, 0), CPoint_2D(mm->getWidth() - 1, n - 1));
-    delete mm;
-    double det = newMatrix->determinantRecursive();
-    delete newMatrix;
-    return det;
-}
-
-double CMatrix::determinantRecursive() const {
     if(m_height == 1) return getValue(CPoint_2D(0,0));
     else if(m_height == 2) {
         return getValue(CPoint_2D(0,0)) * getValue(CPoint_2D(1,1)) - getValue(CPoint_2D(1,0)) * getValue(CPoint_2D(0,1));
@@ -252,11 +232,50 @@ CMatrix* CMatrix::gem() const {
     return newMatrix;
 }
 
-CMatrix* CMatrix::invert() const {
+CMatrix* CMatrix::getInverse() const {
+    double determinant = getDeterminant();
+    if(Numbers::isNull(determinant)) throw CInvalidMatrixException("Neregulární matice nemají inverzní matici.");
+    CMatrix* cofactorMatrix = cofactor();
+    CMatrix* transposedMatrix = cofactorMatrix->getTransposed();
+    delete cofactorMatrix;
+    for(int h = 0 ; h < m_height ; h++) {
+        for(int w = 0 ; w < m_width ; w++) {
+            transposedMatrix->setValue(transposedMatrix->getValue(CPoint_2D(w,h)) / determinant, CPoint_2D(w,h));
+        }
+    }
+    return transposedMatrix;
+}
 
-    //todo
+CMatrix* CMatrix::cofactor() const {
 
-    return NULL;
+    CMatrix* newMatrix = this->newMatrix(m_height, m_width);
+    for(int h = 0 ; h < m_height ; h++) {
+        for(int w = 0 ; w < m_width ; w++) {
+            CMatrix* newBeta = this->betaMatrix(h, w);
+            newMatrix->setValue(newBeta->getDeterminant() * (((h + w) % 2) == 0 ? 1 : -1), CPoint_2D(w, h));
+            delete newBeta;
+        }
+    }
+
+    return newMatrix;
+}
+
+CMatrix* CMatrix::betaMatrix(int i, int j) const {
+    CMatrix* newMatrix = this->newMatrix(m_height - 1, m_width - 1);
+    int newH = 0;
+    int newW = 0;
+
+    for(int oldH = 0 ; oldH < m_height ; oldH++) {
+        if(oldH == i) continue; //Přeskočíme i-tý řádek
+        for(int oldW = 0 ; oldW < m_width ; oldW++) {
+            if(oldW == j) continue; //Přeskočíme j-tý řádek
+            newMatrix->setValue(getValue(CPoint_2D(oldW, oldH)), CPoint_2D(newW, newH));
+            newW++;
+        }
+        newH++;
+        newW = 0;
+    }
+    return newMatrix;
 }
 
 bool CMatrix::isInRowEchelonForm() const {

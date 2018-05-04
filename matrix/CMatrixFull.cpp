@@ -97,3 +97,7 @@ bool CMatrixFull::isZeroRow(int i) const {
     }
     return true;
 }
+
+CMatrix* CMatrixFull::newMatrix(int height, int width) const {
+    return new CMatrixFull(height, width);
+}
