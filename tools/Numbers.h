@@ -9,6 +9,7 @@
 class Numbers {
 public:
     static bool isNull(double val);
+    static bool equals(double x, double y);
 private:
 
 };

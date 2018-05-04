@@ -6,6 +6,7 @@
 #define PA2_SEM_TEST5_H
 
 #include "../matrix/CMatrixSparse.h"
+#include "../tools/Numbers.h"
 
 using namespace std;
 
@@ -24,10 +25,28 @@ void test5() {
     s1.setValue(1, CPoint_2D(0,2));
     s1.setValue(2, CPoint_2D(1,2));
     s1.setValue(3, CPoint_2D(2,2));
-    cout << s1 << endl;
 
-    CMatrix* mm = s1.cofactor();
-    cout << *mm << endl;
+    CMatrix* mm;
+
+    mm = s1.betaMatrix(0,0);
+    assert(mm->getHeight() == 2);
+    assert(mm->getWidth() == 2);
+    assert(mm->getValue(CPoint_2D(0,0)) == 1);
+    assert(mm->getValue(CPoint_2D(1,0)) == 1);
+    assert(mm->getValue(CPoint_2D(0,1)) == 2);
+    assert(mm->getValue(CPoint_2D(1,1)) == 3);
+    delete mm;
+
+    mm = s1.betaMatrix(1,2);
+    assert(mm->getHeight() == 2);
+    assert(mm->getWidth() == 2);
+    assert(mm->getValue(CPoint_2D(0,0)) == 1);
+    assert(mm->getValue(CPoint_2D(1,0)) == 2);
+    assert(mm->getValue(CPoint_2D(0,1)) == 1);
+    assert(mm->getValue(CPoint_2D(1,1)) == 2);
+    delete mm;
+
+    mm = s1.cofactor();
     assert(mm->getValue(CPoint_2D(0,0)) == 1);
     assert(mm->getValue(CPoint_2D(1,0)) == 4);
     assert(mm->getValue(CPoint_2D(2,0)) == -3);
@@ -40,6 +59,23 @@ void test5() {
     assert(mm->getValue(CPoint_2D(1,2)) == -1);
     assert(mm->getValue(CPoint_2D(2,2)) == 3);
     delete mm;
+
+    mm = s1.getInverse();
+    CMatrix* mmm = s1 * (*mm);
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(0,0)), 1));
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(1,0)), 0));
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(2,0)), 0));
+
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(0,1)), 0));
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(1,1)), 1));
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(2,1)), 0));
+
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(0,2)), 0));
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(1,2)), 0));
+    assert(Numbers::equals(mmm->getValue(CPoint_2D(2,2)), 1));
+
+    delete mm;
+
 
 
 

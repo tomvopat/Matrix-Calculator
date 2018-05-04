@@ -190,7 +190,7 @@ double CMatrix::getDeterminant() const {
                     j2++;
                 }
             }
-            det += pow(-1.0, j1 + 2.0) * getValue(CPoint_2D(0, j1)) * newMatrix->determinantRecursive();
+            det += pow(-1.0, j1 + 2.0) * getValue(CPoint_2D(0, j1)) * newMatrix->getDeterminant();
             delete newMatrix;
         }
         return det;

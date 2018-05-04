@@ -112,8 +112,11 @@ void test4() {
     s1.setValue(0, CPoint_2D(2,2));
     assert(s1.getRank() == 2);
     assert(s1.isRegular());
-    assert(s1.getDeterminant() == 3);
+    assert(s1.getDeterminant() == 0);
 
+    mm = s1.cut(CPoint_2D(1,0), CPoint_2D(2,1));
+    assert(mm->getDeterminant() == 3);
+    delete mm;
 }
 
 
