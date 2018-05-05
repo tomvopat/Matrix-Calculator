@@ -8,13 +8,12 @@
 #include "Test4.h"
 #include "Test5.h"
 
-int Tests() {
-
+int test() {
     test1();
     test2();
     test3();
     test4();
     test5();
-
+    std::cout << "All tests passed!" << std::endl;
     return 0;
 }

@@ -5,28 +5,31 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra")
 
 add_executable(
-        pa2_sem matrix/CMatrix.cpp
+        pa2_sem
+        matrix/CMatrix.cpp
         matrix/CMatrix.h
-        tools/CPoint_2D.cpp
-        tools/CPoint_2D.h
         matrix/CMatrixFull.cpp
         matrix/CMatrixFull.h
         matrix/CMatrixSparse.cpp
         matrix/CMatrixSparse.h
-        tools/CInvalidMatrixException.cpp
-        tools/CInvalidMatrixException.h
-        tools/Consts.h
-        tests/Test.cpp
-        tests/Test1.h
-        tests/Test2.h
-        tests/Test3.h
-        tests/Test4.h
-        tests/Test5.h
+        tools/CPoint_2D.cpp
+        tools/CPoint_2D.h
         tools/Numbers.cpp
         tools/Numbers.h
+        tools/Consts.h
+        tools/CInvalidMatrixException.cpp
+        tools/CInvalidMatrixException.h
+        tools/CMVCException.cpp
+        tools/CMVCException.h
         ui/CModel.cpp
         ui/CModel.h
         ui/CView.cpp
         ui/CView.h
         ui/CController.cpp
-        ui/CController.h Main.cpp tools/CMVCException.cpp tools/CMVCException.h)
+        ui/CController.h Main.cpp
+        tests/AllTests.h
+        tests/Test1.h
+        tests/Test2.h
+        tests/Test3.h
+        tests/Test4.h
+        tests/Test5.h)
