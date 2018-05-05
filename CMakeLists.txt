@@ -19,4 +19,14 @@ add_executable(
         tests/Test.cpp
         tests/Test1.h
         tests/Test2.h
-        tests/Test3.h tests/Test4.h tools/Numbers.cpp tools/Numbers.h tests/Test5.h)
+        tests/Test3.h
+        tests/Test4.h
+        tests/Test5.h
+        tools/Numbers.cpp
+        tools/Numbers.h
+        ui/CModel.cpp
+        ui/CModel.h
+        ui/CView.cpp
+        ui/CView.h
+        ui/CController.cpp
+        ui/CController.h)
