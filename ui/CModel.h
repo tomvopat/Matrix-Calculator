@@ -12,8 +12,7 @@
 
 class CModel {
 public:
-    CModel(const std::map<std::string, CMatrix *> &m_data);
-
+    CModel();
     bool add(const std::string& id, const CMatrix* matrix);
     bool remove(const std::string& id);
     CMatrix* get(const std::string& id);

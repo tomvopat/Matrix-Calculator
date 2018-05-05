@@ -29,4 +29,4 @@ add_executable(
         ui/CView.cpp
         ui/CView.h
         ui/CController.cpp
-        ui/CController.h)
+        ui/CController.h Main.cpp tools/CMVCException.cpp tools/CMVCException.h)

@@ -4,7 +4,7 @@
 
 #include "CModel.h"
 
-CModel::CModel(const std::map<std::string, CMatrix *> &m_data) : m_data(m_data), m_tmp(NULL) {}
+CModel::CModel() : m_tmp(NULL) {}
 
 bool CModel::add(const std::string &id, const CMatrix *matrix) {
     return m_data.insert(make_pair(id, matrix->duplicate())).second;

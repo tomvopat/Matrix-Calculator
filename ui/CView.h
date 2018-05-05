@@ -7,21 +7,23 @@
 
 #include <string>
 
-#include "CController.h"
-#include "CModel.h"
+class CModel;
+class CController;
 
 class CView {
 public:
-    CView(const CController &m_controller, const CModel &m_model);
-
+    CView();
+    void setController(CController *m_controller);
+    void setModel(CModel *m_model);
     void start();
     void stop();
+    std::string getInput();
     bool show(const std::string& text);
     bool showFromModel(const std::string& id);
     bool showTmpFromModel();
 private:
-    CController m_controller;
-    CModel m_model;
+    CController* m_controller;
+    CModel* m_model;
 
     bool m_run;
 };
