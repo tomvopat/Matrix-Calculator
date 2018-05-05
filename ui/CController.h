@@ -29,7 +29,8 @@ private:
         COMMAND_TYPE_GEM,
         COMMAND_TYPE_DET = 20,
         COMMAND_TYPE_RANK,
-        COMMAND_TYPE__END = COMMAND_TYPE_RANK
+        COMMAND_TYPE_DOUBLE,
+        COMMAND_TYPE__END = COMMAND_TYPE_DOUBLE
     };
 public:
     CController();

@@ -19,6 +19,7 @@ public:
     bool add(const std::string& id, const CMatrix* matrix);
     bool remove(const std::string& id);
     CMatrix* get(const std::string& id);
+    std::map<std::string, CMatrix*> getAll();
     bool contains(const std::string& id);
 
     void setTmp(const CMatrix* matrix);

@@ -3,6 +3,7 @@
 //
 
 #include "CModel.h"
+#include <vector>
 
 CModel::CModel() : m_tmp(NULL) {}
 
@@ -26,6 +27,10 @@ CMatrix *CModel::get(const std::string &id) {
     auto iter = m_data.find(id);
     if(iter == m_data.end()) return NULL;
     return iter->second->duplicate();
+}
+
+std::map<std::string, CMatrix*> CModel::getAll() {
+    return std::map<std::string, CMatrix*>(m_data);
 }
 
 bool CModel::contains(const std::string &id) {

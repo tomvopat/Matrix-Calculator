@@ -55,28 +55,36 @@ void CController::command(std::stringstream& ss) {
         char c;
         ss >> c;
         if(c == '(') {
-            try{
-                double result = commandDouble(type, ss);
-                m_view->show("Value: " + std::to_string(result));
+
+            char a,b,c;
+            int i,j;
+            double z;
+            ss >> i >> a >> j >> b >> c >> z;
+            if((a != ',') || (b != ')') || (c != '=')) throw CMVCException("Wrong syntax.");
+
+            try {
+                if(! m_model->contains(part)) throw CMVCException("Wrong identifier.");
+                CMatrix* mat = m_model->get(part);
+                m_model->remove(part);
+                mat->setValue(z, CPoint_2D(j,i));
+                m_model->add(part, mat);
+                delete mat;
             } catch(CMVCException ex) {
-                //todo
                 wrongCommandHandler(ex.getM_message());
             }
         }
         else if(c == '=') {
             try {
                 CMatrix* result = commandMatrix(type, ss);
-                m_model->remove(part);
+                if(m_model->contains(part)) m_model->remove(part);
                 m_model->add(part, result);
                 delete result;
             } catch (CMVCException ex) {
-                //todo
                 wrongCommandHandler(ex.getM_message());
             }
 
         }
         else {
-            //todo
             unknownCommandHandler();
         }
     }
@@ -85,7 +93,6 @@ void CController::command(std::stringstream& ss) {
             try {
                 commandVoid(type, ss);
             } catch (CMVCException ex) {
-                //todo
                 wrongCommandHandler(ex.getM_message());
             }
             return;
@@ -97,7 +104,6 @@ void CController::command(std::stringstream& ss) {
                 delete result;
                 m_view->showTmpFromModel();
             } catch(CMVCException ex) {
-                //todo
                 wrongCommandHandler(ex.getM_message());
             }
         }
@@ -106,7 +112,6 @@ void CController::command(std::stringstream& ss) {
                 double result = commandDouble(type, ss);
                 m_view->show("Result: " + std::to_string(result));
             } catch(CMVCException ex) {
-                //todo
                 wrongCommandHandler(ex.getM_message());
             }
         }
@@ -141,16 +146,23 @@ void CController::wrongCommandHandler(const std::string &s) {
 void CController::commandVoid(CController::COMMAND_TYPE type, std::stringstream& ss) {
     switch(type) {
         case COMMAND_TYPE_PRINT:
-            {
-                std::string id;
-                ss >> id;
-                if(! m_model->contains(id)) wrongCommandHandler("Wrong identifier.");
-                m_view->showFromModel(id);
-            }
-            break;
+        {
+            std::string id;
+            ss >> id;
+            if(! m_model->contains(id)) wrongCommandHandler("Wrong identifier.");
+            m_view->showFromModel(id);
+            return;
+        }
         case COMMAND_TYPE_EXIT:
+        {
             m_view->stop();
-            break;
+            return;
+        }
+        case COMMAND_TYPE_LIST:
+        {
+            m_view->showAllFromModel();
+            return;
+        }
         default:
             throw CMVCException("??? ERROR ???");
     }
@@ -158,28 +170,26 @@ void CController::commandVoid(CController::COMMAND_TYPE type, std::stringstream&
 
 double CController::commandDouble(CController::COMMAND_TYPE type, std::stringstream& ss) {
     switch(type) {
-        case COMMAND_TYPE_ID:
-            break;
         case COMMAND_TYPE_DET:
-            {
-                std::string id;
-                ss >> id;
-                if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
-                CMatrix *matrix = m_model->get(id);
-                double result = matrix->getDeterminant();
-                delete matrix;
-                return result;
-            }
+        {
+            std::string id;
+            ss >> id;
+            if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
+            CMatrix *matrix = m_model->get(id);
+            double result = matrix->getDeterminant();
+            delete matrix;
+            return result;
+        }
         case COMMAND_TYPE_RANK:
-            {
-                std::string id;
-                ss >> id;
-                if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
-                CMatrix *matrix = m_model->get(id);
-                double result = matrix->getRank();
-                delete matrix;
-                return result;
-            }
+        {
+            std::string id;
+            ss >> id;
+            if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
+            CMatrix *matrix = m_model->get(id);
+            double result = matrix->getRank();
+            delete matrix;
+            return result;
+        }
         default:
             throw CMVCException("??? ERROR ???");
     }
@@ -188,40 +198,116 @@ double CController::commandDouble(CController::COMMAND_TYPE type, std::stringstr
 CMatrix *CController::commandMatrix(CController::COMMAND_TYPE type, std::stringstream& ss) {
     switch(type) {
         case COMMAND_TYPE_MATRIX:
-            {
-                std::string matrixType;
-                ss >> matrixType;
-                if((matrixType != "-F") && (matrixType != "-S")) {
-                    throw CMVCException("wrong syntax.");
-                }
-                char a,b,c;
-                int i,j;
-                ss >> a >> i >> b >> j >> c;
-                if((a != '[') || (b != ',') || (c != ']')) {
-                    throw CMVCException("wrong syntax.");
-                }
-                if(matrixType == "-F") {
-                    return new CMatrixFull(i,j);
-                }
-                else {
-                    return new CMatrixSparse(i,j);
-                }
+        {
+            std::string matrixType;
+            ss >> matrixType;
+            if((matrixType != "-F") && (matrixType != "-S")) {
+                throw CMVCException("wrong switch.");
             }
-            break;
+            char a,b,c;
+            int i,j;
+            ss >> a >> i >> b >> j >> c;
+            if((a != '[') || (b != ',') || (c != ']')) {
+                throw CMVCException("wrong syntax.");
+            }
+            if(matrixType == "-F") {
+                return new CMatrixFull(i,j);
+            }
+            else {
+                return new CMatrixSparse(i,j);
+            }
+        }
         case COMMAND_TYPE_ID:
-            break;
+        {
+            std::string identifier;
+            ss >> identifier;
+            COMMAND_TYPE type1 = identifyCommand(identifier);
+            if(type1 != COMMAND_TYPE_ID) {
+                return commandMatrix(type1, ss);
+            }
+            if (!m_model->contains(identifier)) throw CMVCException("Wrong identifier.");
+            return m_model->get(identifier);
+        }
         case COMMAND_TYPE_SCAN:
-            break;
+        {
+            //todo
+        }
         case COMMAND_TYPE_MERGE:
-            break;
+        {
+            std::string matrixType;
+            ss >> matrixType;
+            if((matrixType != "-H") && (matrixType != "-V")) {
+                throw CMVCException("wrong switch.");
+            }
+
+            std::string matrixA, matrixB;
+            ss >> matrixA >> matrixB;
+            if((m_model->contains(matrixA)) || (! m_model->contains(matrixB))) {
+                throw CMVCException("wrong indetifiers.");
+            }
+
+            CMatrix *a, *b, *result;
+            a = m_model->get(matrixA);
+            b = m_model->get(matrixB);
+            if(matrixType == "-H") result = a->merge(*b, true);
+            else result = a->merge(*b, false);
+            delete a;
+            delete b;
+            return result;
+        }
         case COMMAND_TYPE_CUT:
-            break;
+        {
+            std::string matrixA;
+            ss >> matrixA;
+            if(m_model->contains(matrixA)) {
+                throw CMVCException("wrong indetifier.");
+            }
+
+            char a,b,c,d,e,f;
+            int i,j,k,l;
+            ss >> a >> i >> b >> j >> c >> d >> k >> e >> l >> f;
+            if((a != '(') || (b != ',') || (c != ')') || (d != '(') || (e != ',') || (f != ')')) {
+                throw CMVCException("Wrong syntax.");
+            }
+            CMatrix *aM, *result;
+            aM = m_model->get(matrixA);
+            result = aM->cut(CPoint_2D(j, i), CPoint_2D(l,k));
+            delete aM;
+            return result;
+        }
         case COMMAND_TYPE_TRANS:
-            break;
+        {
+            std::string id;
+            ss >> id;
+            if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
+            CMatrix *a, *result;
+            a = m_model->get(id);
+            result = a->getTransposed();
+            delete a;
+            return result;
+        }
         case COMMAND_TYPE_INV:
-            break;
+        {
+            std::string id;
+            ss >> id;
+            if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
+            CMatrix* a, *result;
+            a = m_model->get(id);
+            result = a->getInverse();
+            delete a;
+            return result;
+        }
         case COMMAND_TYPE_GEM:
-            break;
+        {
+            std::string id;
+            ss >> id;
+            if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
+            CMatrix* a, *result;
+            a = m_model->get(id);
+            result = a->gem();
+            delete a;
+            return result;
+        }
         default:
             throw CMVCException("??? ERROR ???");
     }

@@ -5,6 +5,7 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <vector>
 
 #include "CView.h"
 #include "CController.h"
@@ -58,6 +59,14 @@ bool CView::showFromModel(const std::string &id) {
     std::cout << *matrix << std::endl;
     delete matrix;
     return true;
+}
+
+void CView::showAllFromModel() {
+    std::map<std::string, CMatrix*> result = m_model->getAll();
+    for(auto iter : result) {
+        std::cout << iter.first << " : \n" << *iter.second << "\n";
+    }
+    std::cout.flush();
 }
 
 bool CView::showTmpFromModel() {

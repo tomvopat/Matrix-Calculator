@@ -20,6 +20,7 @@ public:
     std::string getInput();
     bool show(const std::string& text);
     bool showFromModel(const std::string& id);
+    void showAllFromModel();
     bool showTmpFromModel();
 private:
     CController* m_controller;
