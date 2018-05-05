@@ -13,6 +13,9 @@
 class CModel {
 public:
     CModel();
+
+    virtual ~CModel();
+
     bool add(const std::string& id, const CMatrix* matrix);
     bool remove(const std::string& id);
     CMatrix* get(const std::string& id);

@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 #include "CView.h"
 #include "CController.h"
@@ -29,7 +30,8 @@ void CView::start() {
     std::cout << "Welcome to matrix calculator!" << std::endl;
 
     while(m_run) {
-        m_controller->command(getInput());
+        std::stringstream ss(getInput());
+        m_controller->command(ss);
     }
 
     std::cout << "Ending matrix calculator." << std::endl;

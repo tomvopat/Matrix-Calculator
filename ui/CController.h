@@ -9,37 +9,46 @@
 
 class CView;
 class CModel;
+class CMatrix;
 
 class CController {
+private:
+    enum COMMAND_TYPE {
+        COMMAND_TYPE__BEGIN = 0,
+        COMMAND_TYPE_EXIT = COMMAND_TYPE__BEGIN,
+        COMMAND_TYPE_VAR,
+        COMMAND_TYPE_LIST,
+        COMMAND_TYPE_PRINT,
+        COMMAND_TYPE_MATRIX = 10,
+        COMMAND_TYPE_ID,
+        COMMAND_TYPE_SCAN,
+        COMMAND_TYPE_MERGE,
+        COMMAND_TYPE_CUT,
+        COMMAND_TYPE_TRANS,
+        COMMAND_TYPE_INV,
+        COMMAND_TYPE_GEM,
+        COMMAND_TYPE_DET = 20,
+        COMMAND_TYPE_RANK,
+        COMMAND_TYPE__END = COMMAND_TYPE_RANK
+    };
 public:
     CController();
 
     void setView(CView *m_view);
     void setModel(CModel *m_model);
 
-    void command(const std::string& s);
+    void command(std::stringstream& ss);
+    COMMAND_TYPE identifyCommand(const std::string& s) const;
+    void unknownCommandHandler();
+    void wrongCommandHandler(const std::string& s);
 
-    void commandExit();
+    void commandVoid(COMMAND_TYPE type, std::stringstream& ss);
+    double commandDouble(COMMAND_TYPE type, std::stringstream& ss);
+    CMatrix* commandMatrix(COMMAND_TYPE type, std::stringstream& ss);
+
 private:
     CView* m_view;
     CModel* m_model;
-
-    enum COMMAND_TYPE {
-        COMMAND_TYPE__BEGIN = 0,
-        COMMANT_TYPE_EXIT = COMMAND_TYPE__BEGIN,
-        COMMAND_TYPE_DECLARE,
-        COMMAND_TYPE_SET_VALUE,
-        COMMAND_TYPE_SCAN,
-        COMMAND_TYPE_ASSIGN,
-        COMMAND_TYPE_MERGE,
-        COMMAND_TYPE_CUT,
-        COMMAND_TYPE_DET,
-        COMMAND_TYPE_RANK,
-        COMMAND_TYPE_TRANS,
-        COMMAND_TYPE_INV,
-        COMMAND_TYPE_GEM,
-        COMMAND_TYPE__END = COMMAND_TYPE_GEM
-    };
 };
 
 

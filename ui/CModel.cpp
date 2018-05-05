@@ -6,6 +6,10 @@
 
 CModel::CModel() : m_tmp(NULL) {}
 
+CModel::~CModel() {
+    for(auto iter : m_data) delete iter.second;
+}
+
 bool CModel::add(const std::string &id, const CMatrix *matrix) {
     return m_data.insert(make_pair(id, matrix->duplicate())).second;
 }
