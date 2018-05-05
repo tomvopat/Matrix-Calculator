@@ -6,6 +6,7 @@
 #define PA2_SEM_TEST2_H
 
 #include "../matrix/CMatrixSparse.h"
+#include <cassert>
 
 using namespace std;
 

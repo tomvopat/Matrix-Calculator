@@ -7,6 +7,7 @@
 
 #include "../matrix/CMatrixFull.h"
 #include <iostream>
+#include <cassert>
 
 using namespace std;
 

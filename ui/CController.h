@@ -18,13 +18,16 @@ public:
     void setModel(CModel *m_model);
 
     void command(const std::string& s);
+
+    void commandExit();
 private:
     CView* m_view;
     CModel* m_model;
 
     enum COMMAND_TYPE {
         COMMAND_TYPE__BEGIN = 0,
-        COMMAND_TYPE_DECLARE = COMMAND_TYPE__BEGIN,
+        COMMANT_TYPE_EXIT = COMMAND_TYPE__BEGIN,
+        COMMAND_TYPE_DECLARE,
         COMMAND_TYPE_SET_VALUE,
         COMMAND_TYPE_SCAN,
         COMMAND_TYPE_ASSIGN,

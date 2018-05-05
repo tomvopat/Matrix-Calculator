@@ -31,6 +31,8 @@ void CView::start() {
     while(m_run) {
         m_controller->command(getInput());
     }
+
+    std::cout << "Ending matrix calculator." << std::endl;
 }
 
 void CView::stop() {
@@ -39,7 +41,7 @@ void CView::stop() {
 
 std::string CView::getInput() {
     std::string input;
-    std::getline(std::cin, input, ';');
+    std::getline(std::cin, input);
     return input;
 }
 

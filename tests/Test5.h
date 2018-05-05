@@ -7,6 +7,7 @@
 
 #include "../matrix/CMatrixSparse.h"
 #include "../tools/Numbers.h"
+#include <cassert>
 
 using namespace std;
 
@@ -73,7 +74,7 @@ void test5() {
     assert(Numbers::equals(mmm->getValue(CPoint_2D(0,2)), 0));
     assert(Numbers::equals(mmm->getValue(CPoint_2D(1,2)), 0));
     assert(Numbers::equals(mmm->getValue(CPoint_2D(2,2)), 1));
-
+    delete mmm;
     delete mm;
 
 

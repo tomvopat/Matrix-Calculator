@@ -8,9 +8,9 @@
 #include <cfloat>
 
 bool Numbers::isNull(double val) {
-    return abs(val) <= DBL_EPSILON;
+    return std::abs(val) <= DBL_EPSILON;
 }
 
 bool Numbers::equals(double x, double y) {
-    return abs(x - y) <= DBL_EPSILON;
+    return std::abs(x - y) <= DBL_EPSILON;
 }

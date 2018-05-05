@@ -5,6 +5,7 @@
 #include <iostream>
 #include "../matrix/CMatrixFull.h"
 #include "../tools/CInvalidMatrixException.h"
+#include <cassert>
 
 using namespace std;
 
