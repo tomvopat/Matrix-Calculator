@@ -12,13 +12,18 @@
 
 class CModel {
 public:
+    CModel(const std::map<std::string, CMatrix *> &m_data);
+
     bool add(const std::string& id, const CMatrix* matrix);
     bool remove(const std::string& id);
-    bool change(const std::string& id, const CMatrix* matrix);
     CMatrix* get(const std::string& id);
     bool contains(const std::string& id);
+
+    void setTmp(const CMatrix* matrix);
+    CMatrix* getTmp();
 private:
     std::map<std::string, CMatrix*> m_data;
+    CMatrix* m_tmp;
 };
 
 
