@@ -8,7 +8,7 @@
 #include <iostream>
 
 /**
- * Třída reprezentující výjimku, kterou vyhazují třídy CMatrix při chybě
+ * Class represent exception thrown when some error is caused in classes CMatrix
  */
 
 class CInvalidMatrixException : public std::exception {

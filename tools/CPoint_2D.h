@@ -6,27 +6,17 @@
 #define PA2_SEM_CPOINT_2D_H
 
 /**
- * Třída reprezentující bod ve 2D prostoru
+ * Class represent point in 2D space
  */
 class CPoint_2D {
 public:
     CPoint_2D(int m_x, int m_y);
-
-    /**
-     * Vrátí hodnotu X
-     * @return
-     */
     int getX() const;
-
-    /**
-     * Vrátí hodnotu Y
-     * @return
-     */
     int getY() const;
 
     /**
-     * Porovná dva body
-     * Vrátí true, pokud je (X1 <= X2) && (Y1 >= Y2)
+     * Compares two points
+     * Return true if (X1 <= X2) && (Y1 >= Y2)
      * @param other
      * @return
      */

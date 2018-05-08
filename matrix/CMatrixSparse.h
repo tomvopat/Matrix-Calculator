@@ -11,7 +11,7 @@
 #include <map>
 
 /**
- * Třída pro reprezentaci řídké matice
+ * Class for representing sparse matrix
  */
 class CMatrixSparse : public CMatrix {
 

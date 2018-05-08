@@ -17,56 +17,46 @@ class CController;
 class CView {
 public:
     CView();
-
-    /**
-     * Nastaví controller
-     * @param m_controller
-     */
     void setController(CController *m_controller);
-
-    /**
-     * Nastaví model
-     * @param m_model
-     */
     void setModel(CModel *m_model);
 
     /**
-     * Spustí uživatelské rozhraní
+     * Starts UI
      */
     void start();
 
     /**
-     * Zastaví uživatelské rozhraní
+     * Stops UI
      */
     void stop();
 
     /**
-     * Vrátí uživatelský vstup
+     * return users input
      * @return
      */
     std::string getInput();
 
     /**
-     * Zobrazí v uživatelském rozhraní text
+     * show text in UI
      * @param text
      * @return
      */
     bool show(const std::string& text);
 
     /**
-     * Zobrazí data z modelu
+     * shows data from model
      * @param id
      * @return
      */
     bool showFromModel(const std::string& id);
 
     /**
-     * Zobrazí všechna data z modelu
+     * shows all the data from model
      */
     void showAllFromModel();
 
     /**
-     * Zobrazí temporary object z modelu
+     * shows temporary object from model
      * @return
      */
     bool showTmpFromModel();

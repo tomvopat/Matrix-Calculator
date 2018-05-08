@@ -11,7 +11,7 @@
 
 
 /**
- * Hlavní třída pro reprezentaci matice
+ * Main class for representing matrix
  */
 class CMatrix {
 public:
@@ -25,146 +25,149 @@ public:
     friend std::ostream& operator << (std::ostream& os, const CMatrix& matrix);
 
     /**
-     * vrátí dynamicky alokovanou kopii této matice
+     * returns dynamically alocated copy of this matrix
      * @return
      */
     virtual CMatrix* duplicate() const = 0;
 
     /**
-     * Prohodí řádky v matici zadané indexy 'i' a 'j'
-     * @param i index řádku
-     * @param j index řádku
+     * swap rows in matrix identified by 'i' and 'j' indices
+     * @param i row index
+     * @param j row index
      */
     virtual void swapRows(int i, int j) = 0;
 
     /**
-     * Metoda pro výpis do proudu
+     * Method for output stream
      * @param os
      * @return
      */
     std::ostream& print(std::ostream& os) const;
 
     /**
-     * Vrátí hodnotu na dané pozici v matici
+     * Returns value in matrix on exact position
      * @param point
      * @return
      */
     virtual double getValue(const CPoint_2D& point) const = 0;
 
     /**
-     * Nastaví hodnotu na dané pozici v matici
+     * Sets value in matrix to exact value
      * @param value
      * @param point
      */
     virtual void setValue(double value, const CPoint_2D& point) = 0;
 
     /**
-     * Vrátí velikost matice
-     * @param height počet řádků
-     * @param width počet sloupců
+     * Returns matrix size
+     * @param height row count
+     * @param width coulmn count
      */
     void getSize(int& height, int& width) const;
 
     /**
-     * Vrátí počet řádků matice
+     * Returns row count
      * @return
      */
     int getHeight() const;
 
     /**
-     * Vrátí počet sloupců matice
+     * Returns column count
      * @return
      */
     int getWidth() const;
 
     /**
-     * Vrátí počet nenulových prvků
+     * Returns non-zero row count
      * @return
      */
     int getNonZeroCount() const;
 
     /**
-     * Vrátí transponovanou matici
+     * Return transposed matrix
      * @return
      */
     virtual CMatrix* getTransposed() const = 0;
 
      /**
-     * Sloučí dvě matice
-     * @param other matice ke sloučení
-     * @param horizontally ? vedle sebe : pod sebou
-     * @return sloučená matice
+     * Maerge two matrices
+     * @param other matrix to merge
+     * @param horizontally ? next to each other : below each other
+     * @return merged matrix
      */
     CMatrix* merge(const CMatrix& other, bool horizontally) const;
 
     /**
-     * Ořízne matici podle zadaných dvou bodů (včetně)
-     * @param leftTop levý horní bod
-     * @param rightBottom pravý dolní bod
-     * @return oříznutá matice
+     * crop the matrix
+     * @param leftTop left-top point
+     * @param rightBottom bottom-right point
+     * @return cropped matrix
      */
     virtual CMatrix* cut(const CPoint_2D& leftTop, const CPoint_2D& rightBottom) const = 0;
 
     /**
-     * Vrátí hodnost matice
+     * Return rank of the matrix
      * @return
      */
     int getRank() const;
 
     /**
-     * Zjistí zda je zadaná matice regulární
+     * Check for the matrix regularity
      * @return true == regulární
      */
     bool isRegular() const;
 
     /**
      * Vrátí hodnotu determinantu matice
-     * Vyhodí výjimku CInvalidMatrixException, pokud matice není čtvercová
+     * Return determinant of the matrix
+     * Throws exception CInvalidMatrixException, if it is NOT square matrix
      * @return
      */
     double getDeterminant() const;
 
     /**
-     * Vrátí zGEMovanou matici
+     * Returns matrix after gaussian elimination
      * @return
      */
     CMatrix* gem() const;
 
     /**
-     * Vrátí inverzní matici
-     * pokud tato matice není regulární, vyhodí výjimku CInvalidMatrixException
-     * Inverzní matice k regulární čtvercové matici A je adjugovaná matice, jejíž každý prvek je vydělen determinantem matice A
-     * (Adjugovaná matice je transponovaná kofaktorová matice matice A)
+     * Return inverted matrix
+     * if this matrix is NOT regular, throw exception CInvalidMAtrixException
+     * The adjoint matrix is the transpose of the cofactor matrix.
+     * The cofactor matrix is the matrix of determinants of the minors Aij multiplied by -1i+j.
+     * The i,j'th minor of A is the matrix A without the i'th column or the j'th row.
      * @return
      */
     CMatrix* getInverse() const;
 
     /**
-     * Vrátí TRUE, pokud je matice v horním stupňovitém tvaru
+     * Return TRUE if the matrix is in row-echelon form
      * @return
      */
     bool isInRowEchelonForm() const;
 
     /**
-     * Vrátí kofaktorovou matici
-     * Kofaktorová matice je matice determinantů Beta(i,j) matic, kde na pozici (i,j) je determinant matice Beta(i,j) vynásobený (-1)^(i+j)
+     * Return cofactor matrix
+     * Cofactor matrix is matrix composed of determinant matrices Beta(i,j),
+     * where on position (i,j) is det of matrix Beta(i,j) multiplied by (-1)^(i+j)
      * @return
      */
     CMatrix* cofactor() const;
 
     /**
-     * Vrátí matici B(i,j)
-     * matice B(i,j) vznikne z původní matice vynecháním i-tého řádku a j-tého sloupce
-     * @param i řádkový index
-     * @param j sloupcový index
+     * Return matrix Beta(i,j)
+     * Matrix Beta(i,j) is Matrix original matrix A with skipped i-th row and j-th column
+     * @param i row index
+     * @param j column index
      * @return
      */
     CMatrix* betaMatrix(int i, int j) const;
 
     /**
-     * Vrátí true, pokud zadaný bod náleží do matice
-     * bod (-1,0) = false
-     * matice(3,7), bod(3,6) = false
+     * Returns TRUE, if the point is in the matrix
+     * point (-1,0) = false
+     * matrix(3,7), point(3,6) = false
      * ...
      * @param point
      * @return
@@ -174,44 +177,45 @@ public:
 protected:
 
     /**
-     * Vrátí ukazatel na nově alokovanou matici stejného typu zadaných rozměrů
-     * @param height počet řádků
-     * @param width počet sloupců
+     * Return pointer to newly alocated matrix of the same type (full / sparse)
+     * @param height row count
+     * @param width column count
      * @return
      */
     virtual CMatrix* newMatrix(int height, int width) const = 0;
 
     /**
-     * Zjistí, je řádek vyplněn pouze nulama
-     * @param i index řádku v matici
+     * Returns TRUE, if the row 'i' if filled with zeros
+     * @param i row index
      * @return
      */
     virtual bool isZeroRow(int i) const = 0;
 
     /**
-     * Sečte dvě matice
-     * pokud tyto matice nelze sčítat, vyhodí výjimku CInvalidMatrixException
+     * Add to matrices
+     * Its not possible to add two matrices with different sizes - throws CInvalidMAtrixException
      * @param a
      * @param b
-     * @param result výsledek
+     * @param result
      */
     static void addition(const CMatrix& a, const CMatrix& b, CMatrix& result);
 
     /**
-     * Odečte dvě matice
-     * Pokud tyto matice nelze odečítat, vyhodí výjimku CInvalidMatrixException
+     * subtract to matrices
+     * Its not possible to subtract two matrices with different sizes - throws CInvalidMAtrixException
      * @param a
      * @param b
-     * @param result výsledek
+     * @param result
      */
     static void subtraction(const CMatrix& a, const CMatrix& b, CMatrix& result);
 
     /**
-     * Vynásobí dvě matice
-     * Pokud tyto matice nejdou násobit, vyhodí výjimku CInvalidMatrixException
-     * @param a levý činitel
-     * @param b pravý činitel
-     * @param result výsledek
+     * Multiple two matrices
+     * It is possible to multiple two matrices, if the column count of the first matrix
+     * is equal to the row count of the second matrix
+     * @param a
+     * @param b
+     * @param result
      */
     static void multiplication(const CMatrix& a, const CMatrix& b, CMatrix& result);
 

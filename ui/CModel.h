@@ -20,48 +20,48 @@ public:
     virtual ~CModel();
 
     /**
-     * Přidá data do modelu
-     * @param id identifikátor
+     * Adds data to model
+     * @param id identifier
      * @param matrix data
      * @return
      */
     bool add(const std::string& id, const CMatrix* matrix);
 
     /**
-     * Odstraní data z modelu
-     * @param id identifikátor
+     * removes data from model
+     * @param id identifier
      * @return
      */
     bool remove(const std::string& id);
 
     /**
-     * Vrátí data z modelu
+     * return data from model
      * @param id
      * @return
      */
     CMatrix* get(const std::string& id);
 
     /**
-     * Vrátí všechna data z modelu
+     * return all data from model
      * @return
      */
     std::map<std::string, CMatrix*> getAll();
 
     /**
-     * Vrátí TRUE, pokud model obsahuje objekt s daným identifikátorem
+     * return true if model contains object if certain identifier
      * @param id
      * @return
      */
     bool contains(const std::string& id);
 
     /**
-     * Nastaví temporary object
+     * sets temporary object
      * @param matrix
      */
     void setTmp(const CMatrix* matrix);
 
     /**
-     * Vrátí temporary object
+     * Returns temporary object
      * @return
      */
     CMatrix* getTmp();

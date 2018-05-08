@@ -11,7 +11,7 @@
 #include <vector>
 
 /**
- * Třáda pro reprezentaci husté matice
+ * Class for representing full matrix
  */
 class CMatrixFull : public CMatrix {
 public:

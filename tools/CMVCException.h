@@ -9,7 +9,7 @@
 #include <string>
 
 /**
- * Třída výjimky, která je vyhazována v případě chyby v MVC
+ * Classes for exception thrown by MVC
  */
 
 class CMVCException : public std::exception {

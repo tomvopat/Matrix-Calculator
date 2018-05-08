@@ -11,7 +11,9 @@
 
 using namespace std;
 
-//Testování GEMu, horního stupňovitého tvaru, výpočtu hodnosti, vyhodnocení zda je matice regulární, výpočet determinantu
+/**
+ * testing GEM, row-echelon form, rank counting, regular testing, determinant counting
+ */
 void test4() {
     CMatrixFull f1(4,4);
     f1.setValue(1, CPoint_2D(0,0));

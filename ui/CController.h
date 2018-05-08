@@ -12,7 +12,7 @@ class CModel;
 class CMatrix;
 
 /**
- * Třída pro rezprezentaci controlleru v MVC
+ * Class for representation controller in MVC
  */
 
 class CController {
@@ -41,54 +41,43 @@ private:
     };
 public:
     CController();
-
-    /**
-     * Nastaví view
-     * @param m_view
-     */
     void setView(CView *m_view);
-
-    /**
-     * nastaví model
-     * @param m_model
-     */
     void setModel(CModel *m_model);
 
     /**
-     * Vykoná příkaz z uživatelského vstupu
-     * @param ss příkaz
+     * Executes command from UI
+     * @param ss command
      */
     void command(std::stringstream& ss);
 
     /**
-     * idetifikuje příkaz
-     * @param s příkaz
-     * @return typ příkazu
+     * method for command identification
+     * @param s command
+     * @return typ command type
      */
     COMMAND_TYPE identifyCommand(const std::string& s) const;
 
     /**
-     * Zpracovává chyby z uživatelského vstupu a pošle do view daný string
+     * Process error from UI. Sends errors to view
      * @param s
      */
     void wrongCommandHandler(const std::string& s);
 
     /**
-     *
-     * Zpracovává chyby z uživatelského vstupu
+     * Process error form UI
      * @param s
      */
     void wrongCommandHandler();
 
     /**
-     * Zpracovává příkazy bez návratové hodnoty
+     * Proccess commands without return value
      * @param type
      * @param ss
      */
     void commandVoid(COMMAND_TYPE type, std::stringstream& ss);
 
     /**
-     * Zpracovává příkazy s návratovou hodnotou typu double
+     * Process commands with return value of type double
      * @param type
      * @param ss
      * @return
@@ -96,7 +85,7 @@ public:
     double commandDouble(COMMAND_TYPE type, std::stringstream& ss);
 
     /**
-     * Zpracovává příkazy s návratovou hodnotou typu CMatrix
+     * Process commands with return value of type CMatrix
      * @param type
      * @param ss
      * @return
@@ -104,7 +93,7 @@ public:
     CMatrix* commandMatrix(COMMAND_TYPE type, std::stringstream& ss);
 
     /**
-     * Zpracovává příkazy orientované na binární operátory
+     * Process commands oriented to binary operators
      * @param left
      * @param oper
      * @param ss
@@ -113,7 +102,7 @@ public:
     CMatrix* commandOperator(CMatrix* left, char oper, std::stringstream& ss);
 
     /**
-     * Zpracovává příkazy orientované na konkrétní prvky v matici
+     * Process command oriented to exact values in matrix
      * @param matrix
      * @param ss
      * @return
@@ -121,7 +110,7 @@ public:
     double commandBracket(CMatrix* matrix, std::stringstream& ss);
 
     /**
-     * Metoda pro nastavení všech hodnot v matice dle uživatelského vstupu
+     * Method for setting all values in matrix
      * @param ss
      */
     void commandScan(std::stringstream& ss);

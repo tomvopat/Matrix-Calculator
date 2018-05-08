@@ -10,7 +10,9 @@
 
 using namespace std;
 
-//Testy pro řídkou matici
+/**
+ * tests for sparse matrix
+ */
 void test2() {
 
     CMatrixSparse m1(0,0);

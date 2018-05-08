@@ -6,7 +6,7 @@
 #define PA2_SEM_CONSTS_H
 
 /**
- * Třída pro konstanty použité v programu
+ * Class for consts if program
  */
 
 class Consts {

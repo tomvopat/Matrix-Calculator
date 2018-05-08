@@ -11,7 +11,9 @@
 
 using namespace std;
 
-//Testování násobení hustých a řídkých matic
+/**
+ * tests for multiplication full and sparse matrices
+ */
 void test3() {
 
     CMatrixFull f1(2, 3);

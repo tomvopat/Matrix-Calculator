@@ -11,7 +11,9 @@
 
 using namespace std;
 
-//výpočet inverzní matice
+/**
+ * Inverted matrix countig
+ */
 void test5() {
 
     CMatrixSparse s1(3,3);

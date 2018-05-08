@@ -9,7 +9,9 @@
 
 using namespace std;
 
-//Testy pro plnou matici
+/**
+ * Tests for full matrix
+ */
 void test1() {
 
     CMatrixFull m1(0, 0);
