@@ -106,7 +106,13 @@ void CController::command(std::stringstream& ss) {
         else if(subType == COMMAND_TYPE_EQUATOR) {
             // A = ...
             if(m_model->contains(input)) m_model->remove(input);
-            CMatrix* result = commandMatrix(subType, ss);
+            CMatrix* result = NULL;
+            try {
+                result = commandMatrix(subType, ss);
+            } catch (CMVCException ex) {
+                wrongCommandHandler(ex.getM_message());
+                return;
+            }
             m_model->add(input, result);
             delete result;
             return;
@@ -116,15 +122,16 @@ void CController::command(std::stringstream& ss) {
     }
     else if(type < 10) {
         //EXIT, LIST, PRINT A
-        try {
-            commandVoid(type, ss);
-        } catch(CMVCException ex) {
-            wrongCommandHandler(ex.getM_message());
-        }
+        commandVoid(type, ss);
         return;
     }
     else if(type == COMMAND_TYPE_SCAN) {
-        commandScan(ss);
+        try {
+            commandScan(ss);
+        } catch (CMVCException ex) {
+            wrongCommandHandler(ex.getM_message());
+            return;
+        }
         return;
     }
     else if((type >= 30) && (type < 50)) {
@@ -153,7 +160,11 @@ void CController::command(std::stringstream& ss) {
         m_view->show("result: " + std::to_string(result));
         return;
     }
-    else throw CMVCException("??? ERROR ???");
+    else {
+        wrongCommandHandler("Wrong command.");
+        return;
+    }
+//    else throw CMVCException("??? ERROR ???");
 }
 
 void CController::commandVoid(CController::COMMAND_TYPE type, std::stringstream& ss) {
@@ -255,8 +266,6 @@ CMatrix *CController::commandMatrix(CController::COMMAND_TYPE type, std::strings
                 return new CMatrixSparse(i,j);
             }
         }
-        //Tohle už nepůjde řetězit!
-        //ok
         case COMMAND_TYPE_EQUATOR:
         {
             std::string input;
@@ -268,8 +277,7 @@ CMatrix *CController::commandMatrix(CController::COMMAND_TYPE type, std::strings
                 char c;
                 ss >> c;
                 if(ss.eof()) return matrixA;
-                COMMAND_TYPE subType = identifyCommand(std::string(c, 1));
-                if(subType != COMMAND_TYPE_OPERATOR) throw CMVCException("Invalid syntax.");
+                if((c != '+') && (c != '-') && (c != '*')) throw CMVCException("Invalid syntax.");
                 CMatrix* result = commandOperator(matrixA, c, ss);
                 delete matrixA;
                 return result;
@@ -432,17 +440,23 @@ void CController::commandScan(std::stringstream &ss) {
     CMatrix* matrix = m_model->get(id);
     int i = 0,j = 0, in;
     int count = 0;
-    while(std::cin >> in) {
+    while(std::cin >> std::skipws >> in) {
         if(i >= matrix->getWidth()) {
             i = 0;
             j++;
         }
-        if(j >= matrix->getHeight()) throw CMVCException("SCAN failed.");
+        if(j >= matrix->getHeight()) {
+            delete matrix;
+            throw CMVCException("SCAN failed.");
+        }
         matrix->setValue(in, CPoint_2D(j,i++));
         count++;
         if(count == (matrix->getWidth() * matrix->getHeight())) break;
     }
-    if(count != (matrix->getWidth() * matrix->getHeight())) throw CMVCException("SCAN failed.");
+    if(count != (matrix->getWidth() * matrix->getHeight())) {
+        delete matrix;
+        throw CMVCException("SCAN failed.");
+    }
     m_model->remove(id);
     m_model->add(id, matrix);
     delete matrix;

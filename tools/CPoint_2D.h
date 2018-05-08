@@ -12,9 +12,24 @@ class CPoint_2D {
 public:
     CPoint_2D(int m_x, int m_y);
 
+    /**
+     * Vrátí hodnotu X
+     * @return
+     */
     int getX() const;
+
+    /**
+     * Vrátí hodnotu Y
+     * @return
+     */
     int getY() const;
 
+    /**
+     * Porovná dva body
+     * Vrátí true, pokud je (X1 <= X2) && (Y1 >= Y2)
+     * @param other
+     * @return
+     */
     bool operator <= (const CPoint_2D& other) const;
 private:
     int m_x;

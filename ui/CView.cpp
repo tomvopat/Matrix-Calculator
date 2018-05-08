@@ -44,6 +44,10 @@ void CView::stop() {
 }
 
 std::string CView::getInput() {
+    if(! std::cin.good()) {
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        std::cin.clear();
+    }
     std::string input;
     std::getline(std::cin, input);
     return input;
