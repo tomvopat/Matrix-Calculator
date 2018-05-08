@@ -161,16 +161,6 @@ public:
      */
     CMatrix* betaMatrix(int i, int j) const;
 
-protected:
-
-    /**
-     * Vrátí ukazatel na nově alokovanou matici stejného typu zadaných rozměrů
-     * @param height počet řádků
-     * @param width počet sloupců
-     * @return
-     */
-    virtual CMatrix* newMatrix(int height, int width) const = 0;
-
     /**
      * Vrátí true, pokud zadaný bod náleží do matice
      * bod (-1,0) = false
@@ -180,6 +170,16 @@ protected:
      * @return
      */
     bool isValid(const CPoint_2D& point) const;
+
+protected:
+
+    /**
+     * Vrátí ukazatel na nově alokovanou matici stejného typu zadaných rozměrů
+     * @param height počet řádků
+     * @param width počet sloupců
+     * @return
+     */
+    virtual CMatrix* newMatrix(int height, int width) const = 0;
 
     /**
      * Zjistí, je řádek vyplněn pouze nulama

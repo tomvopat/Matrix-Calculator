@@ -6,10 +6,13 @@
 #define PA2_SEM_NUMBERS_H
 
 
+#include <string>
+
 class Numbers {
 public:
     static bool isNull(double val);
     static bool equals(double x, double y);
+    static bool isDouble(const std::string& s);
 private:
 
 };
