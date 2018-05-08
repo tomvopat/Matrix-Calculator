@@ -5,15 +5,15 @@
 
 #include <sstream>
 #include <iostream>
-#include <matrix/CMatrix.h>
-#include <tools/CInvalidMatrixException.h>
-#include <matrix/CMatrixFull.h>
-#include <matrix/CMatrixSparse.h>
-#include <tools/Numbers.h>
+#include <fstream>
 #include "CController.h"
 #include "CView.h"
 #include "CModel.h"
 #include "../tools/CMVCException.h"
+#include "../tools/Numbers.h"
+#include "../tools/CInvalidMatrixException.h"
+#include "../matrix/CMatrixFull.h"
+#include "../matrix/CMatrixSparse.h"
 
 CController::CController() : m_view(NULL), m_model(NULL) {}
 
@@ -42,6 +42,7 @@ CController::COMMAND_TYPE CController::identifyCommand(const std::string& s) con
     if(s.compare("RANK") == 0) return COMMAND_TYPE_RANK;
     if(s.compare("EXIT") == 0) return COMMAND_TYPE_EXIT;
     if(s.compare("PRINT") == 0) return COMMAND_TYPE_PRINT;
+    if(s.compare("HELP") == 0) return COMMAND_TYPE_HELP;
     return COMMAND_TYPE_ID;
 }
 
@@ -115,7 +116,11 @@ void CController::command(std::stringstream& ss) {
     }
     else if(type < 10) {
         //EXIT, LIST, PRINT A
-        commandVoid(type, ss);
+        try {
+            commandVoid(type, ss);
+        } catch(CMVCException ex) {
+            wrongCommandHandler(ex.getM_message());
+        }
         return;
     }
     else if(type == COMMAND_TYPE_SCAN) {
@@ -142,7 +147,7 @@ void CController::command(std::stringstream& ss) {
         try {
             result = commandDouble(type, ss);
         } catch(CInvalidMatrixException ex) {
-            wrongCommandHandler("Only for square matrices.");
+            wrongCommandHandler("Invalid operation for this matrix.");
             return;
         }
         m_view->show("result: " + std::to_string(result));
@@ -170,6 +175,16 @@ void CController::commandVoid(CController::COMMAND_TYPE type, std::stringstream&
         case COMMAND_TYPE_LIST:
         {
             m_view->showAllFromModel();
+            return;
+        }
+        case COMMAND_TYPE_HELP:
+        {
+            std::ifstream inFile;
+            inFile.open("src/ui/help.txt");
+            std::string line;
+            if(! inFile.is_open()) throw CMVCException("Help not found.");
+            while(getline(inFile, line)) m_view->show(line);
+            inFile.close();
             return;
         }
         default:

@@ -1,0 +1,28 @@
+A = MATRIX -F [2,2]
+PRINT A
+SCAN A
+1 2 3 4
+GEM A
+DET A
+CUT A (0,0) (0,1)
+
+B = A
+C = MERGE -H A B
+PRINT C
+D = MERGE -V A B
+PRINT D
+C + D
+C * D
+INV C
+E = INV A
+F = GEM D
+
+RANK A
+RANK D
+RANK F
+
+DET A
+DET D
+DET F
+
+LIST

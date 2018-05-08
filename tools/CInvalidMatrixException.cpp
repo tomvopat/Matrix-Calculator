@@ -3,6 +3,7 @@
 //
 
 #include "CInvalidMatrixException.h"
+#include <iostream>
 
 CInvalidMatrixException::CInvalidMatrixException(const char *m_message) : m_message(m_message) {}
 

@@ -29,6 +29,7 @@ void CView::start() {
     m_run = true;
 
     std::cout << "Welcome to matrix calculator!" << std::endl;
+    std::cout << "Type: \"HELP\" for help." << std::endl;
 
     while(m_run) {
         std::stringstream ss(getInput());
