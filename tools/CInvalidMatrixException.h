@@ -7,6 +7,10 @@
 
 #include <iostream>
 
+/**
+ * Třída reprezentující výjimku, kterou vyhazují třídy CMatrix při chybě
+ */
+
 class CInvalidMatrixException : public std::exception {
 public:
     CInvalidMatrixException(const char *m_message);

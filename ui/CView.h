@@ -10,6 +10,10 @@
 class CModel;
 class CController;
 
+/**
+ * Třída pro reprezentaci view v MVC
+ */
+
 class CView {
 public:
     CView();

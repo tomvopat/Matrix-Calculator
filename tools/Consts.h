@@ -5,6 +5,9 @@
 #ifndef PA2_SEM_CONSTS_H
 #define PA2_SEM_CONSTS_H
 
+/**
+ * Třída pro konstanty použité v programu
+ */
 
 class Consts {
 private:

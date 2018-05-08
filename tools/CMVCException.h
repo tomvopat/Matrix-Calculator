@@ -8,7 +8,11 @@
 
 #include <string>
 
-class CMVCException {
+/**
+ * Třída výjimky, která je vyhazována v případě chyby v MVC
+ */
+
+class CMVCException : public std::exception {
 public:
     CMVCException(const std::string &m_message);
 

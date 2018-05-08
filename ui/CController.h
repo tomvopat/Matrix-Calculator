@@ -11,6 +11,10 @@ class CView;
 class CModel;
 class CMatrix;
 
+/**
+ * Třída pro rezprezentaci controlleru v MVC
+ */
+
 class CController {
 private:
     enum COMMAND_TYPE {

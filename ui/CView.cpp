@@ -57,7 +57,7 @@ bool CView::show(const std::string &text) {
 bool CView::showFromModel(const std::string &id) {
     CMatrix* matrix = m_model->get(id);
     if(matrix == NULL) return false;
-    std::cout << *matrix << std::endl;
+    std::cout << *matrix;
     delete matrix;
     return true;
 }
@@ -65,7 +65,7 @@ bool CView::showFromModel(const std::string &id) {
 void CView::showAllFromModel() {
     std::map<std::string, CMatrix*> result = m_model->getAll();
     for(auto iter : result) {
-        std::cout << iter.first << " : \n" << *iter.second << "\n";
+        std::cout << iter.first << " : \n" << *iter.second;
     }
     std::cout.flush();
 }
@@ -73,7 +73,7 @@ void CView::showAllFromModel() {
 bool CView::showTmpFromModel() {
     CMatrix* tmp = m_model->getTmp();
     if(tmp == NULL) return false;
-    std::cout << *tmp << std::endl;
+    std::cout << *tmp;
     delete tmp;
     return true;
 }

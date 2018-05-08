@@ -6,7 +6,7 @@
 #define PA2_SEM_CPOINT_2D_H
 
 /**
- * Represents point in two dimension space
+ * Třída reprezentující bod ve 2D prostoru
  */
 class CPoint_2D {
 public:

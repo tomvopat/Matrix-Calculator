@@ -9,6 +9,9 @@
 #include <map>
 #include "../matrix/CMatrix.h"
 
+/**
+ * Třída pro reprezentaci modelu v MVC
+ */
 
 class CModel {
 public:
