@@ -6,6 +6,7 @@
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include "CController.h"
 #include "CView.h"
 #include "CModel.h"
@@ -70,7 +71,10 @@ void CController::command(std::stringstream& ss) {
         COMMAND_TYPE subType = identifyCommand(std::string(1, subInput));
         if(subType == COMMAND_TYPE_OPERATOR) {
             // A +/-/* B
-            if(! m_model->contains(input)) throw CMVCException("Matrix not found.");
+            if(! m_model->contains(input)) {
+                wrongCommandHandler("Matrix not found.");
+                return;
+            }
             CMatrix* matrixA = m_model->get(input);
             CMatrix* result = NULL;
             try {
@@ -100,7 +104,9 @@ void CController::command(std::stringstream& ss) {
             m_model->remove(input);
             m_model->add(input, matrixA);
             delete matrixA;
-            m_view->show("result: " + std::to_string(result));
+            std::stringstream sss;
+            sss << std::fixed << std::setw(10) << std::setprecision(2) << result;
+            m_view->show("result: " + sss.str());
             return;
         }
         else if(subType == COMMAND_TYPE_EQUATOR) {
@@ -157,7 +163,9 @@ void CController::command(std::stringstream& ss) {
             wrongCommandHandler("Invalid operation for this matrix.");
             return;
         }
-        m_view->show("result: " + std::to_string(result));
+        std::stringstream sss;
+        sss << std::fixed << std::setw(10) << std::setprecision(2) << result;
+        m_view->show("result: " + sss.str());
         return;
     }
     else {
@@ -199,7 +207,7 @@ void CController::commandVoid(CController::COMMAND_TYPE type, std::stringstream&
             return;
         }
         default:
-            throw CMVCException("??? ERROR ???");
+            throw CMVCException("ERROR");
     }
 }
 
@@ -238,7 +246,7 @@ double CController::commandDouble(CController::COMMAND_TYPE type, std::stringstr
             }
         }
         default:
-            throw CMVCException("??? ERROR ???");
+            throw CMVCException("ERROR");
     }
 }
 
@@ -260,10 +268,18 @@ CMatrix *CController::commandMatrix(CController::COMMAND_TYPE type, std::strings
                 throw CMVCException("wrong syntax.");
             }
             if(matrixType == "-F") {
-                return new CMatrixFull(i,j);
+                try {
+                    return new CMatrixFull(i,j);
+                } catch (CInvalidMatrixException ex) {
+                    throw CMVCException("Wrong size of the full matrix.");
+                }
             }
             else {
-                return new CMatrixSparse(i,j);
+                try {
+                    return new CMatrixSparse(i,j);
+                } catch (CInvalidMatrixException ex) {
+                    throw CMVCException("Wrong size of the sparse matrix.");
+                }
             }
         }
         case COMMAND_TYPE_EQUATOR:
@@ -372,7 +388,7 @@ CMatrix *CController::commandMatrix(CController::COMMAND_TYPE type, std::strings
             return result;
         }
         default:
-            throw CMVCException("??? ERROR ???");
+            throw CMVCException("ERROR");
     }
 }
 
@@ -449,7 +465,7 @@ void CController::commandScan(std::stringstream &ss) {
             delete matrix;
             throw CMVCException("SCAN failed.");
         }
-        matrix->setValue(in, CPoint_2D(j,i++));
+        matrix->setValue(in, CPoint_2D(i++,j));
         count++;
         if(count == (matrix->getWidth() * matrix->getHeight())) break;
     }

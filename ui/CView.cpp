@@ -6,6 +6,8 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <limits>
+#include <iomanip>
 
 #include "CView.h"
 #include "CController.h"
