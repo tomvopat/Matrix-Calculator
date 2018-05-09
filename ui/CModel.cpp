@@ -9,6 +9,7 @@ CModel::CModel() : m_tmp(NULL) {}
 
 CModel::~CModel() {
     for(auto iter : m_data) delete iter.second;
+    if(m_tmp) delete m_tmp;
 }
 
 bool CModel::add(const std::string &id, const CMatrix *matrix) {
@@ -40,11 +41,12 @@ bool CModel::contains(const std::string &id) {
 }
 
 void CModel::setTmp(const CMatrix *matrix) {
-    delete m_tmp;
+    if(m_tmp) delete m_tmp;
     m_tmp = matrix->duplicate();
 }
 
 CMatrix *CModel::getTmp() {
-    if(m_tmp == NULL) return NULL;
-    return m_tmp->duplicate();
+    CMatrix* result = m_tmp;
+    m_tmp = NULL;
+    return result;
 }

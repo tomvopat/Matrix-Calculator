@@ -99,6 +99,7 @@ void CController::command(std::stringstream& ss) {
                 result = commandBracket(matrixA, ss);
             } catch (CMVCException ex) {
                 wrongCommandHandler(ex.getM_message());
+                delete matrixA;
                 return;
             }
             m_model->remove(input);
@@ -218,8 +219,14 @@ double CController::commandDouble(CController::COMMAND_TYPE type, std::stringstr
             std::string id;
             ss >> id;
             if (!m_model->contains(id)) throw CMVCException("Wrong identifier.");
-            CMatrix *matrix = m_model->get(id);
-            double result = matrix->getDeterminant();
+            CMatrix* matrix = m_model->get(id);
+            double result;
+            try {
+                result = matrix->getDeterminant();
+            } catch(...) {
+                delete matrix;
+                throw;
+            }
             delete matrix;
             return result;
         }
@@ -293,7 +300,10 @@ CMatrix *CController::commandMatrix(CController::COMMAND_TYPE type, std::strings
                 char c;
                 ss >> c;
                 if(ss.eof()) return matrixA;
-                if((c != '+') && (c != '-') && (c != '*')) throw CMVCException("Invalid syntax.");
+                if((c != '+') && (c != '-') && (c != '*')) {
+                    delete matrixA;
+                    throw CMVCException("Invalid syntax.");
+                }
                 CMatrix* result = commandOperator(matrixA, c, ss);
                 delete matrixA;
                 return result;
